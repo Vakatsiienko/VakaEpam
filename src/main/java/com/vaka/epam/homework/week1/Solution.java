@@ -74,7 +74,7 @@ public class Solution {
     }
 
     //            Задание 4.
-//    Используя побитовые операции реализовать алгоритм Евклида нахождения НОД.
+    //    Используя побитовые операции реализовать алгоритм Евклида нахождения НОД.
     public static long euclideanAlgorithm(long x, long y) {
         long gcd = 1L;
         long tmp;
@@ -103,33 +103,6 @@ public class Solution {
         else return euclideanAlgorithm(x, (y - x) >> 1);
     }
 
-    //    Задание 5.
-    //    Реализовать алгоритм RSA.
-    public static void encryptRSA(Object object) {
-        long firstPrime = getRandomPrime(Integer.MAX_VALUE);
-        long secondPrime = getRandomPrime(Integer.MAX_VALUE);
-        long n = multiplyByKaratsuba(firstPrime, secondPrime);
-        long fN = multiplyByKaratsuba(firstPrime - 1, secondPrime - 1);
-        long e = 3;
-        while (euclideanAlgorithm(fN, e) == 0) {
-            e += 2;
-        }
-        long d = (fN * 2L + 1L) / e;
-        System.out.println(d);
-    }
-
-    private static long getRandomPrime(int maxValue){
-        //add SecureRandom holder
-        return Primes.nextPrime(new SecureRandom().nextInt(maxValue));
-    }
-
-
-    public static void main(String[] args) {
-        RSA rsa = new RSA();
-        String encr = rsa.encrypt("nyyyy!");
-        String decr = rsa.decrypt(encr);
-        System.out.println(decr);
-    }
 
 
 }

@@ -19,7 +19,7 @@ public class RSATest {
     @Test
     public void testDecrypt() throws Exception {
         RSA rsa = new RSA();
-        String message = "Hello World!";
+        String message = "Hello!";
 
         String encrypted = rsa.encrypt(message);
         Assert.assertNotEquals(message, encrypted);
