@@ -11,7 +11,7 @@ public class RSATest {
     @Test
     public void testEncrypt() throws Exception {
         RSA rsa = new RSA();
-        String message = "Hello World!";
+        String message = "Hello!";
         String coded = rsa.encrypt(message);
         Assert.assertNotEquals(message, coded);
     }
@@ -21,7 +21,7 @@ public class RSATest {
         RSA rsa = new RSA();
         String message = "Hello!";
 
-        String encrypted = rsa.encrypt(message);
+        String encrypted = rsa.encryptz(message);
         Assert.assertNotEquals(message, encrypted);
 
         String decrypted = rsa.decrypt(encrypted);
