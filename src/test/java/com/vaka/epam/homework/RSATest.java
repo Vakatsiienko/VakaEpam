@@ -21,7 +21,7 @@ public class RSATest {
         RSA rsa = new RSA();
         String message = "Hello!";
 
-        String encrypted = rsa.encryptz(message);
+        String encrypted = rsa.encrypt(message);
         Assert.assertNotEquals(message, encrypted);
 
         String decrypted = rsa.decrypt(encrypted);

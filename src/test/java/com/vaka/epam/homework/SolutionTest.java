@@ -32,6 +32,7 @@ public class SolutionTest {
         long x = (long) (Math.random() * Integer.MAX_VALUE);
         long y = (long) (Math.random() * Integer.MAX_VALUE);
         Assert.assertEquals(x * y, Solution.multiplyByKaratsuba(x, y));
+
         x = 0;
         y = 12;
         Assert.assertEquals(x * y, Solution.multiplyByKaratsuba(x, y));
@@ -39,6 +40,10 @@ public class SolutionTest {
 
     @Test
     public void testEuclideanAlgorithm() throws Exception {
+        Assert.assertEquals(0, Solution.euclideanAlgorithm(0, 0));
+        Assert.assertEquals(1, Solution.euclideanAlgorithm(1, 10));
+
+
         int multiplier = (int) (Math.random() * 10 + 1);
         long a = ((long) (Math.random() * Integer.MAX_VALUE)) * multiplier;
         long b = ((long) (Math.random() * Short.MAX_VALUE)) * multiplier;
@@ -47,9 +52,8 @@ public class SolutionTest {
         for (long i = euclideanGcd; i <= min; i++) {
             if (max % i == 0 && min % i == 0) gcd = i;
         }
+
         Assert.assertEquals(gcd, euclideanGcd);
-        Assert.assertEquals(0, Solution.euclideanAlgorithm((0), 0));
-        Assert.assertEquals(0, Solution.euclideanAlgorithm((0), 0));
 
     }
 
