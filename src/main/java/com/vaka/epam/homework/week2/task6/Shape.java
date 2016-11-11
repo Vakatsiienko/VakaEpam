@@ -2,8 +2,6 @@ package com.vaka.epam.homework.week2.task6;
 
 import org.apache.commons.math3.util.Precision;
 
-import java.util.List;
-
 /**
  * Created by Iaroslav on 11/6/2016.
  */
@@ -12,13 +10,12 @@ import java.util.List;
 //      В классе допустимых фигур Shape определить операцию сложения,
 //      если суммой фигур служит сумма их площадей.
 //
-@FunctionalInterface
-public interface Shape {
+public abstract class Shape {
 
-    double area();
+    public abstract double area();
 
-    default double additionShape(List<Shape> list) {
-        return Precision.round(list.stream().mapToDouble(Shape::area).sum(), 2);
+    public double sum(Shape shape) {
+        return Precision.round(this.area() + shape.area(), 2);
     }
 
 

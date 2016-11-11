@@ -11,7 +11,7 @@ import org.apache.commons.math3.util.Precision;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Triangle implements Shape {
+public class Triangle extends Shape {
 
     private double h;
 

@@ -11,7 +11,7 @@ import org.apache.commons.math3.util.Precision;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Parallelogram implements Shape {
+public class Parallelogram extends Shape {
     private double a;
     private double b;
     @Override

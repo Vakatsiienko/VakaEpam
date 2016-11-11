@@ -11,7 +11,7 @@ import org.apache.commons.math3.util.Precision;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Ring implements Shape {
+public class Ring extends Shape {
     private double r;
     @Override
     public double area() {

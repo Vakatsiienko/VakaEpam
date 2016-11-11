@@ -1,4 +1,4 @@
-package com.vaka.epam.homework.week2.task9;
+package com.vaka.epam.homework.week2.task8and9;
 
 /**
  * Created by Iaroslav on 11/6/2016.
@@ -6,52 +6,57 @@ package com.vaka.epam.homework.week2.task9;
 //9.	Реализовать двухсвязанный список.
 // Реализация должна предусматривать наличие элемента header,
 // в котором есть ссылка на первй и последний элемент списка(DoubleLinkedList).
-public class DoubleLinkedList<T> {
+public class DoubleLinkedList<T> extends SingleLinkedList<T> implements List<T> {
 
     private int size;
 
-    private Node<T> first;
-    private Node<T> last;
+    private Node first;
+    private Node last;
 
+    @Override
     public T add(T t) {
-        if (size == 0) {
-            first = new Node<>(t);
-            last = first;
-        }
-        Node<T> node = new Node<>(t);
-        last.next = node;
-        node.previous = last;
-        last = node;
-        size++;
-        return t;
+        return super.add(t);
     }
 
-
-    public boolean remove(Object o) {
-        if (first.thisElement.equals(o)) {
-            first = first.next;
-            size--;
-            return true;
-        }
-        for (Node<T> x = first; x != null; x = x.next) {
-            if (o.equals(x.next)) {
-                Node<T> removing = x.next;
-                x.next = removing.next;
-                size--;
-                return true;
-            }
-        }
-        return false;
-    }
-    public Iterator iterator(){
-        return new Iterator();
+    @Override
+    public T addOnIndex(int index, T t) {
+        return super.addOnIndex(index, t);
     }
 
+    @Override
+    public boolean remove(T o) {
+        return super.remove(o);
+    }
 
-    private class Node<T> {
+    @Override
+    public int indexOf(Object o) {
+        return super.indexOf(o);
+    }
+
+    @Override
+    public DoubleLinkLIter iterator() {
+        return new DoubleLinkLIter();
+    }
+
+    @Override
+    public boolean contains(T t) {
+        return super.contains(t);
+    }
+
+    @Override
+    public T get(int index) {
+        return super.get(index);
+    }
+
+    @Override
+    public boolean removeOnIndex(int index) {
+        return super.removeOnIndex(index);
+    }
+
+    private class Node {
         private final T thisElement;
-        private Node<T> next;
-        private Node<T> previous;
+        private Node next;
+        private Node previous;
 
         Node(T t) {
             thisElement = t;
@@ -59,15 +64,15 @@ public class DoubleLinkedList<T> {
 
     }
 
-    public class Iterator {
+    protected class DoubleLinkLIter extends SingleLinkLIter implements BothWayIterator<T> {
 
         private DoubleLinkedList<T> list;
 
-        private Node<T> pointer;
+        private Node pointer;
 
         private int index;
 
-        private Iterator() {
+        private DoubleLinkLIter() {
             this.list = DoubleLinkedList.this;
         }
 
@@ -96,8 +101,5 @@ public class DoubleLinkedList<T> {
 
     }
 
-    public static void main(String[] args) {
-        System.out.println(012);
-    }
 
 }

@@ -11,7 +11,7 @@ import org.apache.commons.math3.util.Precision;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Trapezium implements Shape {
+public class Trapezium extends Shape {
 
     private double a;
     private double b;
