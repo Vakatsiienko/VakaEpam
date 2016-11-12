@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Sentence {
     private List<Word> words = new ArrayList<>();
+    //TODO add divisor
 
     public Sentence(String sentence) {
         String[] newWords = sentence.split(" ");
@@ -17,12 +18,15 @@ public class Sentence {
         }
     }
 
-    public String buildSentence(){
+    @Override
+    public String toString(){
         StringBuilder builder = new StringBuilder();
         for (Word word : words) {
-            builder.append(word.getStr()).append(" ");
+            builder.append(word.toString()).append(" ");
         }
-        return builder.toString().trim();
+        builder.setCharAt(builder.length()-1, '.');
+
+        return builder.toString();
     }
 
 }

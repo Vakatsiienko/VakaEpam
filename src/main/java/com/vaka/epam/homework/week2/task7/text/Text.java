@@ -37,7 +37,7 @@ public class Text {
     }
 
     public void appendText(String text) {
-        String[] newSentences = text.split("(\\.)?!?(\\?)?");
+        String[] newSentences = text.split("\\."); //text.split("(\\.)?!?(\\?)?");
         for (String newSentence : newSentences) {
             sentences.add(new Sentence(newSentence));
         }
