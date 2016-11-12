@@ -1,18 +1,26 @@
 package com.vaka.epam.homework.week2.task7.auto;
 
+import lombok.Getter;
+
+import java.util.UUID;
+
 /**
  * Created by Iaroslav on 11/11/2016.
  */
-class Wheel {
-    private String tires;
-    private String rims;
-    private float diameter;
-    private int mileage;
+@Getter
+public class Wheel {
 
-    Wheel(String tires, String rims, float diameter, int mileage) {
+    private String serialUID = UUID.randomUUID().toString();
+
+    private String tires;
+
+    private String rims;
+
+    private Status status;
+
+    public Wheel(String tires, String rims, Status status) {
         this.tires = tires;
         this.rims = rims;
-        this.diameter = diameter;
-        this.mileage = mileage;
+        this.status = status;
     }
 }
