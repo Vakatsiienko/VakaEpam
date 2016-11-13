@@ -73,10 +73,18 @@ public class SingleLinkedListTest {
         list.add("second element");
         list.add("third element");
 
-        Assert.assertTrue(list.removeOnIndex(1));
-//        Assert.assertFalse(list.contains("second element"));
-        Assert.assertTrue(list.removeOnIndex(-10));
-        Assert.assertTrue(list.removeOnIndex(10));
+        list.removeOnIndex(1);
+        Assert.assertFalse(list.contains("second element"));
+        try {
+            list.removeOnIndex(-10);
+
+        } catch (IndexOutOfBoundsException expected) {
+        }
+        try {
+            list.removeOnIndex(10);
+
+        } catch (IndexOutOfBoundsException expected) {
+        }
     }
 
     @Test
@@ -119,5 +127,13 @@ public class SingleLinkedListTest {
     public void testIterator() throws Exception {
         List<String> list = new SingleLinkedList<>();
         Assert.assertNotNull(list.iterator());
+    }
+
+    public static List<Integer> createList(){
+        SingleLinkedList<Integer> list = new SingleLinkedList<>();
+        for (int i = 0; i < 1000; i++) {
+            list.add(i);
+        }
+        return list;
     }
 }

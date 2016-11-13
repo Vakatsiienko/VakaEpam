@@ -16,7 +16,7 @@ public class TextTest {
         String content = "Java test. Hello world! Whatcha? Ok, nevermind.";
         Text text = Text.buildFull(header, content);
 
-        String expected = "Java wiki.\r\nJava test. Hello world! Whatcha? Ok, nevermind.";
+        String expected = "Java test. Hello world! Whatcha? Ok, nevermind.";
 
         Assert.assertEquals(expected, text.getConcatContent());
     }

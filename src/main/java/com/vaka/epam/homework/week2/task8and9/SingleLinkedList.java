@@ -11,7 +11,7 @@ public class SingleLinkedList<T> implements List<T> {
     private Node last;
 
     @Override
-    public T add(T t) {
+    public void add(T t) {
         if (size == 0) {
             first = new Node(t);
             last = first;
@@ -21,18 +21,18 @@ public class SingleLinkedList<T> implements List<T> {
             last = node;
         }
         size++;
-        return t;
     }
 
 
     @Override
-    public T addOnIndex(int index, T t) {
+    public void addOnIndex(int index, T t) {
         Node element = first;
         if (size < index || index < 0)
             throw new IndexOutOfBoundsException(
                     String.format("Index must be lower or equal size, size - %s, index - %s", size, index));
         else if (size == index) {
-            return add(t);
+            add(t);
+            return;
         } else for (int i = 0; i < index - 1; i++) {
             element = element.next;
         }
@@ -41,7 +41,6 @@ public class SingleLinkedList<T> implements List<T> {
         Node thisElement = new Node(t);
         previous.next = thisElement;
         thisElement.next = next;
-        return thisElement.item;
     }
 
     @Override
@@ -114,6 +113,12 @@ public class SingleLinkedList<T> implements List<T> {
     }
 
     @Override
+    public void clear() {
+        while (first != null)
+            unlink(first);
+    }
+
+    @Override
     public T get(int index) {
         checkIndex(index);
         Node x = first;
@@ -128,13 +133,12 @@ public class SingleLinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean removeOnIndex(int index) {
+    public void removeOnIndex(int index) {
         checkIndex(index);
         Node x = first;
         for (int i = 0; i < index; i++)
             x = x.next;
         unlink(x);
-        return true;
     }
 
     private class Node {

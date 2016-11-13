@@ -5,19 +5,21 @@ package com.vaka.epam.homework.week2.task8and9;
  */
 public interface List<T> {
 
-    T add(T t);
+    void add(T t);
 
-    T addOnIndex(int index, T t);
+    void addOnIndex(int index, T t);
 
     T get(int index);
 
     boolean remove(T t);
 
-    boolean removeOnIndex(int index);
+    void removeOnIndex(int index);
 
     boolean contains(T t);
 
     int indexOf(T t);
+
+    void clear();
 
     SingleWayIterator<T> iterator();
 
