@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Iaroslav on 11/11/2016.
@@ -15,33 +16,52 @@ import java.util.List;
 @Setter
 public class Text {
 
-    private String header;
-    private List<Sentence> sentences;
+    private Optional<String> header;
+    private List<Sentence> content;
 
-    public Text() {
-        this.header = "";
-        sentences = new ArrayList<>();
-    }
-    public Text(String header) {
-        this.header = header;
-        sentences = new ArrayList<>();
+    private Text() {
     }
 
-    public void printAll() {
-        System.out.println(header + "\n\r");
-        sentences.forEach(sentence -> System.out.println(sentence + " "));
+    public static Text buildFull(String header, String content) {
+        Text text = new Text();
+        text.header = Optional.of(header);
+        text.content = Sentence.parseContent(content);
+        return text;
+    }
+    public static Text buildEmpty() {
+        Text text = new Text();
+        text.header = Optional.empty();
+        text.content = new ArrayList<>();
+        return text;
+    }
+
+    public void appendText(String text) {
+        content.addAll(Sentence.parseContent(text));
+    }//TODO ask about return this;
+
+    public String getConcatContent() {
+        StringBuilder stringBuilder = new StringBuilder();
+        content.forEach(sentence -> {
+            stringBuilder.append(sentence);
+            stringBuilder.append(" ");
+        });
+        stringBuilder.setLength(stringBuilder.length() - 1);
+        return stringBuilder.toString();
     }
 
     public void printHeader() {
         System.out.println(header);
     }
 
-    public void appendText(String text) {
-        String[] newSentences = text.split("\\."); //text.split("(\\.)?!?(\\?)?");
-        for (String newSentence : newSentences) {
-            sentences.add(new Sentence(newSentence));
-        }
+    public void print(){
+        System.out.println(this);
     }
 
-
+    @Override
+    public String toString() {
+        if (header.isPresent()) {
+            return String.join("\r\n", header.get(), getConcatContent());
+        }
+        return getConcatContent();
+    }
 }
