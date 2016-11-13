@@ -8,6 +8,8 @@ import org.junit.rules.ExpectedException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Iaroslav on 11/12/2016.
@@ -15,7 +17,7 @@ import java.io.PrintStream;
 public class AutoTest {
     @Test
     public void testPrintName() throws Exception {
-        Auto auto = Auto.buildBugattiVeyron16point4();
+        Auto auto = buildBugattiVeyron16point4();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
         PrintStream old = System.out;
@@ -29,7 +31,7 @@ public class AutoTest {
 
     @Test(expected = DrivingException.class)
     public void testChangeWheel() throws Exception {
-        Auto auto = Auto.buildBugattiVeyron16point4();
+        Auto auto = buildBugattiVeyron16point4();
         Wheel newWheel = new Wheel("Bugatti tire", "Some rim", Status.OK);
         Wheel old = auto.getWheels().get(WheelPosition.BL);
         Assert.assertEquals(old, auto.changeWheel(newWheel, WheelPosition.BL));
@@ -41,12 +43,13 @@ public class AutoTest {
 
         auto.refuelFull();
         auto.drive();
+        //expecting DrivingException
         auto.changeWheel(old, WheelPosition.BL);
     }
 
     @Test
     public void testCheckWheels() throws Exception {
-        Auto auto = Auto.buildBugattiVeyron16point4();
+        Auto auto = buildBugattiVeyron16point4();
         Assert.assertTrue(auto.checkWheels());
         Wheel broken = new Wheel("Old Tire", "Old rim", Status.BROKEN);
         auto.changeWheel(broken, WheelPosition.BL);
@@ -55,7 +58,7 @@ public class AutoTest {
 
     @Test
     public void testReadyToDrive() throws Exception {
-        Auto auto = Auto.buildBugattiVeyron16point4();
+        Auto auto = buildBugattiVeyron16point4();
         Assert.assertFalse(auto.readyToDrive());
         auto.refuelFull();
         Assert.assertTrue(auto.readyToDrive());
@@ -81,7 +84,7 @@ public class AutoTest {
 
     @Test
     public void testRefuel() throws Exception {
-        Auto auto = Auto.buildBugattiVeyron16point4();
+        Auto auto = buildBugattiVeyron16point4();
         double currentFuel = auto.getFuel();
         auto.refuel(10.4d);
         Assert.assertEquals(auto.getFuel(), Precision.round(currentFuel + 10.4d, 2), 0d);
@@ -102,7 +105,7 @@ public class AutoTest {
 
     @Test
     public void testRefuelFull() throws Exception {
-        Auto auto = Auto.buildBugattiVeyron16point4();
+        Auto auto = buildBugattiVeyron16point4();
         Assert.assertNotEquals(auto.getFuel(), auto.getFuelCapacity());
         auto.refuelFull();
         Assert.assertEquals(auto.getFuel(), auto.getFuelCapacity(), 0d);
@@ -110,7 +113,7 @@ public class AutoTest {
 
     @Test
     public void testDrive() throws Exception {
-        Auto auto = Auto.buildBugattiVeyron16point4();
+        Auto auto = buildBugattiVeyron16point4();
         Assert.assertFalse(auto.isDriving());
         auto.refuelFull();
         auto.drive();
@@ -120,7 +123,7 @@ public class AutoTest {
 
     @Test
     public void testStop() throws Exception {
-        Auto auto = Auto.buildBugattiVeyron16point4();
+        Auto auto = buildBugattiVeyron16point4();
         Assert.assertFalse(auto.isDriving());
         auto.refuelFull();
         auto.drive();
@@ -128,5 +131,17 @@ public class AutoTest {
         auto.stop();
 
         Assert.assertFalse(auto.isDriving());
+    }
+
+    public static Auto buildBugattiVeyron16point4() {
+        Engine engine = new Engine(1001, 6500, Status.OK);
+        Map<WheelPosition, Wheel> wheels = new HashMap<>();
+        String tireName = "Veyron Tire";
+        String rimName = "Veyron Rim";
+        wheels.put(WheelPosition.BL, new Wheel(tireName, rimName, Status.OK));
+        wheels.put(WheelPosition.BR, new Wheel(tireName, rimName, Status.OK));
+        wheels.put(WheelPosition.FL, new Wheel(tireName, rimName, Status.OK));
+        wheels.put(WheelPosition.FR, new Wheel(tireName, rimName, Status.OK));
+        return Auto.createCar(engine, wheels, "Bugatty", "Veyron 16.4", 100d);
     }
 }

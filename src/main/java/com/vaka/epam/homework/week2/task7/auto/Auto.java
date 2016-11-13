@@ -3,7 +3,6 @@ package com.vaka.epam.homework.week2.task7.auto;
 import lombok.Getter;
 import org.apache.commons.math3.util.Precision;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -27,21 +26,15 @@ public class Auto {
 
     private Map<WheelPosition, Wheel> wheels;
 
-    private Drive drive;
-
     private double fuel;
 
     private double fuelCapacity;
 
     private boolean driving;
 
-    private boolean refueling;
-
-    private boolean changingWheel;
-
     private int wheelsCount;
 
-    private Auto() {
+    public Auto() {
 
     }
 
@@ -59,27 +52,23 @@ public class Auto {
     }
 
     public void refuel(double incoming) {
-        try {
-            refueling = true;
-            if (incoming <= 0)
-                throw new RefuelException(String.format("Fuel amount cannot be lower or equal 0, your: %s", incoming));
-            if (driving)
-                throw new DrivingException("You need to stop for refuel");
-            double totalFuel = Precision.round(this.fuel + incoming, 2);
-            if (fuelCapacity >= totalFuel) {
-                this.fuel = Precision.round(this.fuel + incoming, 2);
-            } else
-                throw new RefuelException(String.format("Incoming fuel is to much, fuel capacity: %s, current: %s, incoming: %s", fuelCapacity, fuel, incoming));
-        } finally {
-            refueling = false;
-        }
+        if (incoming <= 0)
+            throw new RefuelException(String.format("Fuel amount cannot be lower or equal 0, your: %s", incoming));
+        if (driving)
+            throw new DrivingException("You need to stop for refuel");
+        double totalFuel = Precision.round(this.fuel + incoming, 2);
+        if (fuelCapacity >= totalFuel) {
+            this.fuel = Precision.round(this.fuel + incoming, 2);
+        } else
+            throw new RefuelException(String.format("Incoming fuel is to much, fuel capacity: %s, current: %s, incoming: %s", fuelCapacity, fuel, incoming));
     }
 
     public boolean readyToDrive() {
-        if (fuel != 0.0d)
-            if (engine.getStatus() == Status.OK)
-                if (checkWheels())
-                    return true;
+        if (engine != null)
+            if (fuel != 0.0d)
+                if (engine.getStatus() == Status.OK)
+                    if (checkWheels())
+                        return true;
         return false;
     }
 
@@ -95,37 +84,21 @@ public class Auto {
 
     public Wheel changeWheel(Wheel wheel, WheelPosition pos) {
         if (!driving) {
-            changingWheel = true;
             Wheel old = wheels.get(pos);
             wheels.put(pos, wheel);
-            changingWheel = false;
             return old;
         } else throw new DrivingException("For changing wheel you need to stop");
     }
 
-    public static Auto buildBugattiVeyron16point4() {
-        Engine engine = new Engine(1001, 6500, Status.OK);
-        Map<WheelPosition, Wheel> wheels = new HashMap<>();
-        wheels.put(WheelPosition.BL, new Wheel("Some Tires", "Some Rims", Status.OK));
-        wheels.put(WheelPosition.BR, new Wheel("Some Tires", "Some Rims", Status.OK));
-        wheels.put(WheelPosition.FL, new Wheel("Some Tires", "Some Rims", Status.OK));
-        wheels.put(WheelPosition.FR, new Wheel("Some Tires", "Some Rims", Status.OK));
-        Auto veyron = new Auto();
-        veyron.brand = "Bugatty";
-        veyron.model = "Veyron 16.4";
-        veyron.engine = engine;
-        veyron.wheels = wheels;
-        veyron.fuelCapacity = 100.0d;
-        veyron.drive = Drive.AWD;
-        veyron.wheelsCount = 4;
-        return veyron;
+    public static Auto createCar(Engine engine, Map<WheelPosition, Wheel> wheels, String brand, String model, double fuelCapacity) {
+        Auto car = new Auto();
+        car.brand = brand;
+        car.model = model;
+        car.engine = engine;
+        car.wheels = wheels;
+        car.fuelCapacity = fuelCapacity;
+        car.wheelsCount = 4;
+        return car;
     }
 
-    public static void main(String[] args) throws Exception {
-        try {
-            throw new Exception();
-        } finally {
-            System.out.println("HERE");
-        }
-    }
 }
