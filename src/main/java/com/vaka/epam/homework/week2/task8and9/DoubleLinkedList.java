@@ -55,6 +55,14 @@ public class DoubleLinkedList<T> implements List<T> {
 
     @Override
     public boolean remove(T o) {
+        if (o == null) {
+            for (Node x = first; x != null; x = x.next) {
+                if (x.item == null) {
+                    unlink(x);
+                    return true;
+                }
+            }
+        }
         for (Node x = first; x != null; x = x.next) {
             if (x.item.equals(o)) {
                 unlink(x);
@@ -76,6 +84,7 @@ public class DoubleLinkedList<T> implements List<T> {
         }
         if (last == element) {
             last = last.previous;
+            last.next = null;
             size--;
             return;
         }

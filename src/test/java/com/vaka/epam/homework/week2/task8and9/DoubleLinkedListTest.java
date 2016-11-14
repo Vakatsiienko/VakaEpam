@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Created by Iaroslav on 11/14/2016.
+ * Created by Iaroslav on 11/9/2016.
  */
 public class DoubleLinkedListTest {
     @Test
@@ -153,7 +153,8 @@ public class DoubleLinkedListTest {
     public void testIterator() throws Exception {
         List<Integer> list = createList();
         Assert.assertNotNull(list.iterator());
-        Assert.assertEquals(SingleLinkedList.SingleLinkLIter.class, list.iterator().getClass());
+        Assert.assertEquals(DoubleLinkedList.DoubleLinkLIter.class,
+                list.iterator().getClass());
     }
 
     @Test
