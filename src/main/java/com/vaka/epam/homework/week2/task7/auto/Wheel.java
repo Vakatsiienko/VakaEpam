@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.UUID;
 
 /**
- * Created by Iaroslav on 11/11/2016.
+ * Created by Iaroslav on 11/9/2016.
  */
 @Getter
 public class Wheel {

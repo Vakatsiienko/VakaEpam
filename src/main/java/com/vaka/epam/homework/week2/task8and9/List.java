@@ -19,7 +19,9 @@ public interface List<T> {
 
     int indexOf(T t);
 
-    void clear();
+    void removeAll();
+
+    int size();
 
     SingleWayIterator<T> iterator();
 

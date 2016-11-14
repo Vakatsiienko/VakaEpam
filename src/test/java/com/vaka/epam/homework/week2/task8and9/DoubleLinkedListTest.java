@@ -4,12 +4,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Created by Iaroslav on 11/10/2016.
+ * Created by Iaroslav on 11/14/2016.
  */
-public class SingleLinkedListTest {
+public class DoubleLinkedListTest {
     @Test
     public void testAdd() throws Exception {
-        List<String> list = new SingleLinkedList<>();
+        List<String> list = new DoubleLinkedList<>();
         String helloWorld = "HelloWorld";
         list.add(helloWorld);
         list.add(null);
@@ -18,42 +18,41 @@ public class SingleLinkedListTest {
         Assert.assertSame(helloWorld, list.get(0));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testAddOnIndex() throws Exception {
-        List<String> list = new SingleLinkedList<>();
-        list.add("first element");
-        list.add("second element");
-        list.add("third element");
-        String elem = "new element";
-        String last = "last element";
-        String middle = "middle element";
+        List<Integer> list = createList();
+        Integer elem = -1;
+        Integer last = -10;
+        Integer middle = -5;
         list.addOnIndex(0, elem);
-        list.addOnIndex(4, last);
-        list.addOnIndex(2, middle);
+        list.addOnIndex(500, middle);
+        list.addOnIndex(list.size(), last);
 
         try {
-            list.addOnIndex(-4, "some elem");
+            list.addOnIndex(-4, -16);
             Assert.fail();
         } catch (IndexOutOfBoundsException expected) {
         }
         try {
-            list.addOnIndex(14, "some elem");
+            list.addOnIndex(10000, -16);
             Assert.fail();
         } catch (IndexOutOfBoundsException expected) {
         }
 
-        Assert.assertFalse(list.contains("some elem"));
+        Assert.assertFalse(list.contains(-16));
         Assert.assertSame(elem, list.get(0));
-        Assert.assertSame(middle, list.get(2));
-        Assert.assertSame(last, list.get(5));
+        Assert.assertSame(middle, list.get(500));
+        Assert.assertSame(last, list.get(list.size() - 1));
     }
 
     @Test
     public void testGet() throws Exception {
         List<Integer> list = createList();
-        Integer i = 5000;
-        list.addOnIndex(50, i);
-        Assert.assertSame(i, list.get(50));
+
+        for (int i = 0; i < list.size(); i++) {
+            Assert.assertTrue(
+                    String.format("Expected %s, actual %s", i, list.get(i)) , i == list.get(i));
+        }
         try {
             list.get(-10);
             Assert.fail();
@@ -64,8 +63,9 @@ public class SingleLinkedListTest {
             Assert.fail();
         } catch (IndexOutOfBoundsException expected) {
         }
-        list.addOnIndex(900, i);
-        Assert.assertSame(i, list.get(900));
+        Integer i = 5000;
+        list.add(i);
+        Assert.assertSame(i, list.get(list.size() - 1));
     }
 
     @Test
@@ -134,7 +134,7 @@ public class SingleLinkedListTest {
 
     @Test
     public void testContains() throws Exception {
-        List<String> list = new SingleLinkedList<>();
+        List<String> list = new DoubleLinkedList<>();
         list.add("first element");
         list.add("second element");
         list.add("third element");
@@ -184,7 +184,7 @@ public class SingleLinkedListTest {
     }
 
     public List<Integer> createList() {
-        List<Integer> list = new SingleLinkedList<>();
+        List<Integer> list = new DoubleLinkedList<>();
         for (int i = 0; i < 1000; i++) {
             list.add(i);
         }

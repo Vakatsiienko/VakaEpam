@@ -4,7 +4,7 @@ package com.vaka.epam.homework.week2.task7.text;
 import java.util.*;
 
 /**
- * Created by Iaroslav on 11/11/2016.
+ * Created by Iaroslav on 11/9/2016.
  */
 public class Sentence {
     private Word[] words;
@@ -15,23 +15,23 @@ public class Sentence {
         endMarks = new HashMap<>();
     }
 
-    public static Sentence parseSentence(String[] sentence) {
-        String lastWord = sentence[sentence.length - 1];
+    public static Sentence parseSentence(String[] words) {
+        String lastWord = words[words.length - 1];
         if (!endOfSentenceMark(lastWord))
             throw new SentenceException(
                     "Sentence should ends with proper punctual mark: '.' '?' '!', your mark: "
                             + lastWord.charAt(lastWord.length() - 1));
 
-        Sentence newSentence = new Sentence(sentence.length);
-        for (int i = 0; i < sentence.length; i++) {
-            if (i < sentence.length - 1 && endOfSentenceMark(sentence[i]))
-                throw new SentenceException("There cannot be end mark in the middle of sentence. Your sentence: " + sentence[i]);
-            else if (endWithMark(sentence[i])) {
-                newSentence.endMarks.put(i, sentence[i].charAt(sentence[i].length() - 1));
-                newSentence.words[i] = new Word(sentence[i]
-                        .substring(0, sentence[i].length() - 1));
+        Sentence newSentence = new Sentence(words.length);
+        for (int i = 0; i < words.length; i++) {
+            if (i < words.length - 1 && endOfSentenceMark(words[i]))
+                throw new SentenceException("There cannot be end mark in the middle of sentence. Your sentence: " + words[i]);
+            else if (endWithMark(words[i])) {
+                newSentence.endMarks.put(i, words[i].charAt(words[i].length() - 1));
+                newSentence.words[i] = new Word(words[i]
+                        .substring(0, words[i].length() - 1));
             } else
-                newSentence.words[i] = new Word(sentence[i]);
+                newSentence.words[i] = new Word(words[i]);
         }
         return newSentence;
     }

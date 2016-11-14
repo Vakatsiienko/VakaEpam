@@ -3,10 +3,12 @@ package com.vaka.epam.homework.week2.task7.starsystem;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 /**
- * Created by Iaroslav on 11/13/2016.
+ * Created by Iaroslav on 11/9/2016.
  */
 public class StarSystemTest {
     @Test
@@ -14,7 +16,7 @@ public class StarSystemTest {
         StarSystem solarSystem = createSystem();
         Assert.assertEquals(2, solarSystem.planetsCount());
 
-        solarSystem.addPlanet(new Planet("Venus", Optional.empty()));
+        solarSystem.getPlanets().add(new Planet("Venus", new ArrayList<>()));
         Assert.assertEquals(3, solarSystem.planetsCount());
 
     }
@@ -24,7 +26,7 @@ public class StarSystemTest {
         StarSystem solarSystem = createSystem();
 
         Assert.assertEquals(2, solarSystem.planetsCount());
-        solarSystem.addPlanet(new Planet("Venus", Optional.empty()));
+        solarSystem.getPlanets().add(new Planet("Venus", new ArrayList<>()));
         Assert.assertEquals(3, solarSystem.planetsCount());
     }
 
@@ -36,18 +38,18 @@ public class StarSystemTest {
         Star[] stars = {new Star("Alpha Centauri A"),
                 new Star("Alpha Centauri B"),
                 new Star("Proxima Centauri")};
-        StarSystem centauri = new StarSystem("Alpha Centauri", stars, Optional.empty());
+        StarSystem centauri = new StarSystem("Alpha Centauri", stars, new ArrayList<>());
         Assert.assertEquals(centauri.nameOfStars(),
                 "Alpha Centauri A, Alpha Centauri B, Proxima Centauri");
     }
 
     public StarSystem createSystem(){
         StarSystem solarSystem = new StarSystem("Solar System", new Star("Sun"));
-        solarSystem.addPlanet(new Planet("Mercury", Optional.empty()));
+        solarSystem.getPlanets().add(new Planet("Mercury", new ArrayList<Satellite>()));
 
-        Planet earth = new Planet("Earth", Optional.empty());
-        earth.addSatellite(new Satellite("Moon"));
-        solarSystem.addPlanet(earth);
+        Planet earth = new Planet("Earth", new ArrayList<>());
+        earth.getSatellites().add(new Satellite("Moon"));
+        solarSystem.getPlanets().add(earth);
         return solarSystem;
     }
 }

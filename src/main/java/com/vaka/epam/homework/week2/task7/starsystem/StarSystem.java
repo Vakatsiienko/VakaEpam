@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.*;
 
 /**
- * Created by Iaroslav on 11/13/2016.
+ * Created by Iaroslav on 11/9/2016.
  */
 // Создать объект класса  Звездная система, используя классы Планета, Звезда, Луна.
 // Методы: вывести  количество планет в звездной системе,
@@ -16,25 +16,17 @@ import java.util.*;
 public class StarSystem {
     private final String uid;
     private Star[] stars;
-    private Optional<Map<String, Planet>> planets;
+    private List<Planet> planets;
 
     public StarSystem(String uid, Star star) {
         this.uid = uid;
         stars = new Star[1];
         stars[0] = star;
-        planets = Optional.empty();
+        planets = new ArrayList();
     }
 
     public int planetsCount() {
-        if (planets.isPresent())
-            return planets.get().size();
-        else return 0;
-    }
-
-    public void addPlanet(Planet planet) {
-        if (!planets.isPresent())
-            planets = Optional.of(new HashMap<>());
-        planets.get().put(planet.getUid(), planet);
+        return planets.size();
     }
 
     /**

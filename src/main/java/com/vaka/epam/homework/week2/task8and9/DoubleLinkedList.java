@@ -36,26 +36,21 @@ public class DoubleLinkedList<T> implements List<T> {
         else if (size == index) {
             add(t);
             return;
-        } else if (size / 2 > index) {
-            element = first;
-            for (int i = 0; i < index - 1; i++) {
-                element = element.next;
-            }
-        } else {
-            element = last;
-            for (int i = 0, y = size - index; i < y; i++) {
-                element = element.previous;
-            }
-        }
-        insertAfter(element, new Node(t));
-        size++;
+        } else
+            element = getNodeOnIndex(index);
+        insertBefore(element, new Node(t));
     }
 
-    private void insertAfter(Node after, Node insertion) {
-        Node node = after.next;
-        after.next = insertion;
-        insertion.previous = after;
-        insertion.next = node;
+    private void insertBefore(Node before, Node insertion) {
+        Node node = before.previous;
+        before.previous = insertion;
+        insertion.previous = node;
+        insertion.next = before;
+        if (before == first)
+            first = insertion;
+        else node.next = insertion;
+
+        size++;
     }
 
     @Override
@@ -72,7 +67,7 @@ public class DoubleLinkedList<T> implements List<T> {
     private void unlink(Node element) {
         if (first == element) {
             first = first.next;
-            if (first == last) {
+            if (first == null || first == first.next) {
                 first = null;
                 last = null;
             }
@@ -128,7 +123,7 @@ public class DoubleLinkedList<T> implements List<T> {
         Node element;
         if (size / 2 > index) {
             element = first;
-            for (int i = 0; i < index - 1; i++) {
+            for (int i = 0; i < index; i++) {
                 element = element.next;
             }
         } else {
@@ -151,9 +146,14 @@ public class DoubleLinkedList<T> implements List<T> {
     }
 
     @Override
-    public void clear() {
+    public void removeAll() {
         while (first != null)
             unlink(first);
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 
     private class Node {

@@ -1,30 +1,32 @@
 package com.vaka.epam.homework.week2.task10;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.stream.Collectors;
 
 /**
- * Created by Iaroslav on 11/13/2016.
+ * Created by Iaroslav on 11/9/2016.
  */
 
 // Создать класс Cправочная Cлужба Oбщественного Tранспорта с внутренним классом,
 // с помощью объектов которого можно хранить информацию о времени, линиях маршрутов и стоимости проезда.
+@Getter
+@AllArgsConstructor
 public class TransportHelpdesk {
 
     private Map<Integer, RouteInfo> routesInfo;
 
+    @Getter
+    @AllArgsConstructor
     private class RouteInfo {
-        private Map<String, Set<LocalTime>> stationsTime;
+        private Map<String, SortedSet<LocalTime>> arrivalTimeByStationName;
         private List<String> stations;
-        private double fee;
-
-        public List<LocalTime> getStationTime(String station) {
-            return stationsTime.get(station).stream()
-                    .sorted()
-                    .collect(Collectors.toList());
-        }
+        private final double fee;
     }
 }

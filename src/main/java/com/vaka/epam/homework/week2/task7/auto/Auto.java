@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Created by Iaroslav on 11/11/2016.
+ * Created by Iaroslav on 11/9/2016.
  */
 // Создать объект класса Автомобиль, используя классы Колесо, Двигатель.
 // Методы: ехать, заправляться, менять колесо, вывести на консоль марку
@@ -63,13 +63,21 @@ public class Auto {
             throw new RefuelException(String.format("Incoming fuel is to much, fuel capacity: %s, current: %s, incoming: %s", fuelCapacity, fuel, incoming));
     }
 
+    private boolean hasEngine() {
+        return engine != null;
+    }
+
+    private boolean hasFuel() {
+        return fuel != 0d;
+    }
+
+    private boolean isEngineOk() {
+        return engine.getStatus() == Status.OK;
+    }
+
+
     public boolean readyToDrive() {
-        if (engine != null)
-            if (fuel != 0.0d)
-                if (engine.getStatus() == Status.OK)
-                    if (checkWheels())
-                        return true;
-        return false;
+        return hasEngine() && hasFuel() && isEngineOk() && checkWheels();
     }
 
     public boolean checkWheels() {

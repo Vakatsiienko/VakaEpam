@@ -49,7 +49,6 @@ public class SingleLinkedList<T> implements List<T> {
             for (Node x = first; x != null; x = x.next) {
                 if (x.item == null) {
                     unlink(x);
-                    size--;
                     return true;
                 }
             }
@@ -57,7 +56,6 @@ public class SingleLinkedList<T> implements List<T> {
             for (Node x = first; x != null; x = x.next) {
                 if (o.equals(x.item)) {
                     unlink(x);
-                    size--;
                     return true;
                 }
             }
@@ -69,6 +67,7 @@ public class SingleLinkedList<T> implements List<T> {
         Node previous = first;
         if (first == element) {
             first = first.next;
+            size--;
             return;
         }
         for (Node x = first; x != null; x = x.next) {
@@ -81,6 +80,7 @@ public class SingleLinkedList<T> implements List<T> {
             previous.next = previous.next.next;
             //if our element is last node
         else previous.next = null;
+        size--;
     }
 
     @Override
@@ -113,7 +113,7 @@ public class SingleLinkedList<T> implements List<T> {
     }
 
     @Override
-    public void clear() {
+    public void removeAll() {
         while (first != null)
             unlink(first);
     }
@@ -125,6 +125,11 @@ public class SingleLinkedList<T> implements List<T> {
         for (int i = 0; i < index; i++)
             x = x.next;
         return x.item;
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 
     private void checkIndex(int index) {

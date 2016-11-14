@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by Iaroslav on 11/11/2016.
+ * Created by Iaroslav on 11/9/2016.
  */
 // Создать объект класса Текст, используя классы Предложение,Слово.
 // Методы: дополнить текст, вывести на консоль текст, заголовок текста.
