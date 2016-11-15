@@ -13,6 +13,8 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements List<T
     private Node first;
     private Node last;
 
+    private int modCount;
+
     private void insertBefore(Node before, Node insertion) {
         Node node = before.previous;
         before.previous = insertion;
@@ -24,24 +26,31 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements List<T
         size++;
     }
 
-    private void unlink(Node element) {
-        if (first == element) {
-            first = first.next;
-            if (first == first.next) {
-                first = null;
-                last = null;
-            }
-            size--;
+    private void unlink(Node removing) {
+        modCount++;
+        if (first == removing) {
+            unlinkFirst();
             return;
         }
-        if (last == element) {
+        if (last == removing) {
             last = last.previous;
             last.next = null;
             size--;
             return;
         }
-        element.previous.next = element.next;
-        element.next = element.previous;
+        removing.previous.next = removing.next;
+        removing.next = removing.previous;
+        size--;
+    }
+
+    private void unlinkFirst() {
+        if (first == last) {
+            first = null;
+            last = null;
+        } else {
+            first = first.next;
+            first.previous = null;
+        }
         size--;
     }
 
@@ -111,9 +120,9 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements List<T
     }
 
     private class Node {
-        private T item;
-        private Node next;
-        private Node previous;
+        public T item;
+        public Node next;
+        public Node previous;
 
         private Node(T t) {
             item = t;
@@ -131,9 +140,11 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements List<T
         private DoubleLinkedList<T> list;
 
         private Node pointer;
+        private int modCount;
 
         private DoubleLinkLIter() {
             this.list = DoubleLinkedList.this;
+            modCount = list.modCount;
         }
 
         @Override
@@ -147,44 +158,69 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements List<T
         @Override
         public T previous() {
             if (pointer == null)
-                pointer = list.first;
+                pointer = list.last;
             else pointer = pointer.previous;
             return pointer.item;
         }
 
         @Override
-        public boolean remove() {
+        public T remove() {
+            if (pointer == null)
+                throw new NullPointerException();
             unlink(pointer);
-            return true;
+            T item = pointer.item;
+            pointer = pointer.next;
+            return item;
         }
 
         @Override
         public T set(T item) {
+            if (pointer == null)
+                throw new NullPointerException();
             T previous = pointer.item;
             pointer.item = item;
             return previous;
         }
 
         @Override
-        public void toFirst() {
-            pointer = first;
-        }
-        @Override
-        public void toLast() {
-            pointer = last;
+        public void insertBefore(T t) {
+            if (pointer == null)
+                throw new NullPointerException();
+            Node insertion = new Node(pointer.previous, t, pointer);
+            if (pointer != first)
+                pointer.previous.next = insertion;
+            pointer.previous = insertion;
         }
 
         @Override
-        public void insert(T t) {
-            Node insertion = new Node(pointer.previous, t, pointer.next);
-            pointer.previous.next = insertion;
+        public void insertAfter(T t) {
+            if (pointer == null)
+                throw new NullPointerException();
+            Node insertion = new Node(pointer, t, pointer.next);
+            if (pointer != last)
             pointer.next.previous = insertion;
+            pointer.next = insertion;
         }
+
         @Override
         public boolean hasNext() {
+            checkModifications();
+            if (pointer == null)
+                return first != null;
             return pointer.next != null;
         }
 
+        @Override
+        public boolean hasPrevious() {
+            checkModifications();
+            if (pointer == null)
+                return first != null;
+            return pointer.previous != null;
+        }
+        private void checkModifications(){
+            if (modCount != list.modCount)
+                throw new ModificationException();
+        }
     }
 
 

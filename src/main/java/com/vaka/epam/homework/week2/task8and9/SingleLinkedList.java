@@ -8,25 +8,36 @@ public class SingleLinkedList<T> extends AbstractLinkedList<T> implements List<T
     private int size;
     private Node first;
     private Node last;
+    private int modCount;
 
-    private void unlink(Node element) {
-        Node previous = first;
-        if (first == element) {
-            first = first.next;
-            size--;
+    private void unlink(Node removing) {
+        modCount++;
+        if (first == removing) {
+            unlinkFirst();
             return;
         }
-        for (Node x = first; x != null; x = x.next) {
-            if (x.next == element) {
-                previous = x;
-                break;
+        Node previous = getPrevious(removing);
+        if (removing == last)
+            last = previous;
+        previous.next = removing.next;
+        size--;
+    }
+
+    private void unlinkFirst() {
+        if (first == last) {
+            first = null;
+            last = null;
+        } else first = first.next;
+        size--;
+    }
+
+    private Node getPrevious(Node node) {
+        for (Node previous = first; previous != null; previous = previous.next) {
+            if (previous.next == node) {
+                return previous;
             }
         }
-        if (previous.next.next != null)
-            previous.next = previous.next.next;
-            //if our element is last node
-        else previous.next = null;
-        size--;
+        return null;
     }
 
     @Override
@@ -120,43 +131,59 @@ public class SingleLinkedList<T> extends AbstractLinkedList<T> implements List<T
 
         private Node pointer;
 
+        private int modCount;
+
         private SingleLinkLIter() {
-            this.list = SingleLinkedList.this;
+            list = SingleLinkedList.this;
+            modCount = list.modCount;
         }
 
         @Override
         public T next() {
-            if (pointer == null)
+            if (first == null)
+                throw new NullPointerException();
+            else if (pointer == null) {
                 pointer = list.first;
-            else pointer = pointer.next;
+            } else pointer = pointer.next;
+            checkModifications();
             return pointer.item;
         }
 
         @Override
-        public boolean remove() {
+        public T remove() {
+            checkModifications();
+            if (pointer == null)
+                throw new NullPointerException();
+            Node next = pointer.next;
             unlink(pointer);
-            return true;
+            modCount++;
+            T item = pointer.item;
+            pointer = next;
+            return item;
         }
 
         @Override
         public T set(T item) {
+            checkModifications();
+            if (pointer == null)
+                throw new NullPointerException();
             T previous = pointer.item;
             pointer.item = item;
             return previous;
         }
 
         @Override
-        public void toFirst() {
-            pointer = first;
-        }
-
-        @Override
         public boolean hasNext() {
-            if (pointer == null) return first == null;
+            checkModifications();
+            if (pointer == null)
+                return first != null;
             return pointer.next != null;
         }
 
+        private void checkModifications(){
+            if (modCount != list.modCount)
+                throw new ModificationException();
+        }
 
     }
-
 }

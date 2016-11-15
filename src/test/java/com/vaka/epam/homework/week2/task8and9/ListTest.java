@@ -9,17 +9,18 @@ import org.junit.Test;
 public abstract class ListTest {
     @Test
     public void testAdd() throws Exception {
-        List<String> list = new DoubleLinkedList<>();
-        String helloWorld = "HelloWorld";
-        list.add(helloWorld);
+        List<Integer> list = createCollectedList();
+        Integer last = 5000;
+        list.add(last);
         list.add(null);
-        Assert.assertSame(helloWorld, list.get(0));
-        Assert.assertTrue(null == list.get(1));
+        Assert.assertSame(last, list.get(list.size() - 2));
+        Assert.assertTrue(null == list.get(list.size() - 1));
+        list.remove(null);
     }
 
     @Test
     public void testAddOnIndex() throws Exception {
-        List<Integer> list = createList();
+        List<Integer> list = createCollectedList();
         Integer elem = -1;
         Integer last = -10;
         Integer middle = -5;
@@ -46,11 +47,11 @@ public abstract class ListTest {
 
     @Test
     public void testGet() throws Exception {
-        List<Integer> list = createList();
+        List<Integer> list = createCollectedList();
 
         for (int i = 0; i < list.size(); i++) {
             Assert.assertTrue(
-                    String.format("Expected %s, actual %s", i, list.get(i)) , i == list.get(i));
+                    String.format("Expected %s, actual %s", i, list.get(i)), i == list.get(i));
         }
         try {
             list.get(-10);
@@ -66,7 +67,7 @@ public abstract class ListTest {
 
     @Test
     public void testRemove() throws Exception {
-        List<Integer> list = createList();
+        List<Integer> list = createCollectedList();
 
         Assert.assertTrue(list.remove(0));
         Assert.assertFalse(list.remove(0));
@@ -84,6 +85,9 @@ public abstract class ListTest {
 
 
         Assert.assertFalse(list.remove(null));
+        list.add(5000);
+        Assert.assertTrue(list.remove(5000));
+
         list.add(null);
         Assert.assertTrue(list.remove(null));
         Assert.assertFalse(list.contains(null));
@@ -91,7 +95,7 @@ public abstract class ListTest {
 
     @Test()
     public void testRemoveOnIndex() throws Exception {
-        List<Integer> list = createList();
+        List<Integer> list = createCollectedList();
         list.add(5000);
 
 
@@ -118,7 +122,7 @@ public abstract class ListTest {
 
     @Test
     public void testIndexOf() throws Exception {
-        List<Integer> list = createList();
+        List<Integer> list = createCollectedList();
         for (int i = 0; i < list.size(); i++) {
             Assert.assertTrue(i == list.indexOf(i));
         }
@@ -148,13 +152,13 @@ public abstract class ListTest {
 
     @Test
     public void testIterator() throws Exception {
-        List<Integer> list = createList();
+        List<Integer> list = createCollectedList();
         Assert.assertNotNull(list.iterator());
     }
 
     @Test
     public void testClear() throws Exception {
-        List<Integer> list = createList();
+        List<Integer> list = createCollectedList();
         for (int i = 0; i < list.size(); i++) {
             Assert.assertTrue(i == list.get(i));
         }
@@ -163,11 +167,13 @@ public abstract class ListTest {
             Assert.assertFalse(list.contains(i));
         }
         Assert.assertTrue(0 == list.size());
+        list.clear();
+        Assert.assertTrue(0 == list.size());
     }
 
     @Test
     public void testSize() throws Exception {
-        List<Integer> list = createList();
+        List<Integer> list = createCollectedList();
         int size = list.size();
         list.add(45);
         size++;
@@ -179,5 +185,24 @@ public abstract class ListTest {
         Assert.assertTrue(0 == list.size());
     }
 
-    public abstract List<Integer> createList();
+    @Test
+    public void testIsEmpty() throws Exception {
+        List<Integer> full = createCollectedList();
+        List<Integer> empty = createEmptyList();
+
+        Assert.assertFalse(full.isEmpty());
+        Assert.assertTrue(empty.isEmpty());
+
+        full.clear();
+        Assert.assertTrue(full.isEmpty());
+
+        empty.add(34);
+        Assert.assertFalse(empty.isEmpty());
+
+    }
+
+    public abstract List<Integer> createCollectedList();
+
+    public abstract List<Integer> createEmptyList();
+
 }

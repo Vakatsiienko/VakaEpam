@@ -18,36 +18,35 @@ public abstract class AbstractLinkedList<T> implements List<T> {
 
     @Override
     public int indexOf(T t) {
+        if (size() == 0)
+            return -1;
         int index = 0;
-        Iterator<T> iterator = iterator();
+        Iterator iterator = iterator();
         if (t == null) {
-            for (T item = iterator.next(); iterator.hasNext(); item = iterator.next()) {
-                if (item == null)
+            do {
+                if (iterator.next() == null)
                     return index;
                 index++;
-            }
+            } while (iterator.hasNext());
         } else {
-            for (T item = iterator.next(); iterator.hasNext(); item = iterator.next()) {
-                if (t.equals(item)) {
+            do {
+                if (t.equals(iterator.next()))
                     return index;
-                }
                 index++;
-            }
+            } while (iterator.hasNext());
         }
         return -1;
     }
 
     @Override
     public boolean remove(T removing) {
-        if (size() == 0) return false;
+        if (size() == 0)
+            return false;
         Iterator iterator = iterator();
         Object current;
         if (removing == null) {
             do {
                 current = iterator.next();
-                if (current == null || current.equals(998)) {
-                    System.out.println("null");
-                }
                 if (current == null) {
                     iterator.remove();
                     return true;
@@ -55,13 +54,13 @@ public abstract class AbstractLinkedList<T> implements List<T> {
             } while (iterator.hasNext());
 
         } else {
-            do{
+            do {
                 current = iterator.next();
                 if (removing.equals(current)) {
                     iterator.remove();
                     return true;
                 }
-            }while (iterator.hasNext());
+            } while (iterator.hasNext());
         }
         return false;
 
@@ -70,7 +69,8 @@ public abstract class AbstractLinkedList<T> implements List<T> {
     @Override
     public void clear() {
         Iterator iterator = iterator();
-        while (iterator.hasNext())
+        iterator.next();
+        while (size() != 0)
             iterator.remove();
     }
 

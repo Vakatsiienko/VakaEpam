@@ -7,7 +7,11 @@ public interface BothWayIterator<T> extends Iterator<T> {
 
     T previous();
 
-    void toLast();
+    boolean hasPrevious();
 
-    void insert(T t);
+    void insertBefore(T t);
+
+    void insertAfter(T t);
+
+
 }

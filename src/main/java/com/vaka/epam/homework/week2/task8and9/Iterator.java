@@ -8,10 +8,8 @@ interface Iterator<T> {
 
     boolean hasNext();
 
-    boolean remove();
+    T remove();
 
     T set(T item);
-
-    void toFirst();
 
 }
