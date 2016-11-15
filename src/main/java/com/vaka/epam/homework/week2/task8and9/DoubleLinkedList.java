@@ -6,40 +6,12 @@ package com.vaka.epam.homework.week2.task8and9;
 //9.	Реализовать двухсвязанный список.
 // Реализация должна предусматривать наличие элемента header,
 // в котором есть ссылка на первй и последний элемент списка(DoubleLinkedList).
-public class DoubleLinkedList<T> implements List<T> {
+public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements List<T> {
 
     private int size;
 
     private Node first;
     private Node last;
-
-    @Override
-    public void add(T t) {
-        if (size == 0) {
-            first = new Node(t);
-            last = first;
-        } else {
-            Node node = new Node(t);
-            last.next = node;
-            node.previous = last;
-            last = node;
-        }
-        size++;
-    }
-
-    @Override
-    public void addOnIndex(int index, T t) {
-        Node element;
-        if (size < index || index < 0)
-            throw new IndexOutOfBoundsException(
-                    String.format("Index must be lower or equal size, size - %s, index - %s", size, index));
-        else if (size == index) {
-            add(t);
-            return;
-        } else
-            element = getNodeOnIndex(index);
-        insertBefore(element, new Node(t));
-    }
 
     private void insertBefore(Node before, Node insertion) {
         Node node = before.previous;
@@ -49,33 +21,13 @@ public class DoubleLinkedList<T> implements List<T> {
         if (before == first)
             first = insertion;
         else node.next = insertion;
-
         size++;
-    }
-
-    @Override
-    public boolean remove(T o) {
-        if (o == null) {
-            for (Node x = first; x != null; x = x.next) {
-                if (x.item == null) {
-                    unlink(x);
-                    return true;
-                }
-            }
-        }
-        for (Node x = first; x != null; x = x.next) {
-            if (x.item.equals(o)) {
-                unlink(x);
-                return true;
-            }
-        }
-        return false;
     }
 
     private void unlink(Node element) {
         if (first == element) {
             first = first.next;
-            if (first == null || first == first.next) {
+            if (first == first.next) {
                 first = null;
                 last = null;
             }
@@ -93,42 +45,8 @@ public class DoubleLinkedList<T> implements List<T> {
         size--;
     }
 
-    @Override
-    public int indexOf(Object o) {
-        int index = 0;
-        if (o == null) {
-            for (Node x = first; x != null; x = x.next) {
-                if (x.item == null)
-                    return index;
-                index++;
-            }
-        } else {
-            for (Node x = first; x != null; x = x.next) {
-                if (o.equals(x.item))
-                    return index;
-                index++;
-            }
-        }
-        return -1;
-    }
-
-    @Override
-    public DoubleLinkLIter iterator() {
-        return new DoubleLinkLIter();
-    }
-
-    @Override
-    public boolean contains(T t) {
-        return indexOf(t) >= 0;
-    }
-
-    @Override
-    public T get(int index) {
-        return getNodeOnIndex(index).item;
-    }
-
     private Node getNodeOnIndex(int index) {
-        checkIndex(index);
+        checkIndexForAdd(index);
         Node element;
         if (size / 2 > index) {
             element = first;
@@ -144,9 +62,42 @@ public class DoubleLinkedList<T> implements List<T> {
         return element;
     }
 
-    private void checkIndex(int index) {
-        if (index >= size || index < 0)
-            throw new IndexOutOfBoundsException(String.format("Size: %s, index^ %s", size, index));
+
+    @Override
+    public boolean add(T t) {
+        if (size == 0) {
+            first = new Node(t);
+            last = first;
+        } else {
+            Node node = new Node(t);
+            last.next = node;
+            node.previous = last;
+            last = node;
+        }
+        size++;
+        return true;
+    }
+
+    @Override
+    public void addOnIndex(int index, T t) {
+        checkIndexForAdd(index);
+        Node element;
+        if (size == index) {
+            add(t);
+            return;
+        } else
+            element = getNodeOnIndex(index);
+        insertBefore(element, new Node(t));
+    }
+
+    @Override
+    public BothWayIterator<T> iterator() {
+        return new DoubleLinkLIter();
+    }
+
+    @Override
+    public T get(int index) {
+        return getNodeOnIndex(index).item;
     }
 
     @Override
@@ -155,18 +106,12 @@ public class DoubleLinkedList<T> implements List<T> {
     }
 
     @Override
-    public void removeAll() {
-        while (first != null)
-            unlink(first);
-    }
-
-    @Override
     public int size() {
         return size;
     }
 
     private class Node {
-        private final T item;
+        private T item;
         private Node next;
         private Node previous;
 
@@ -174,42 +119,71 @@ public class DoubleLinkedList<T> implements List<T> {
             item = t;
         }
 
+        private Node(Node previous, T item, Node next) {
+            this.item = item;
+            this.next = next;
+            this.previous = previous;
+        }
     }
 
-    protected class DoubleLinkLIter implements BothWayIterator<T> {
+    private class DoubleLinkLIter implements BothWayIterator<T> {
 
         private DoubleLinkedList<T> list;
 
         private Node pointer;
 
-        private int index;
-
         private DoubleLinkLIter() {
             this.list = DoubleLinkedList.this;
         }
 
+        @Override
         public T next() {
             if (pointer == null)
                 pointer = list.first;
             else pointer = pointer.next;
-            T result = pointer.item;
-            index++;
-            return result;
+            return pointer.item;
         }
 
+        @Override
         public T previous() {
             if (pointer == null)
                 pointer = list.first;
             else pointer = pointer.previous;
-            T result = pointer.item;
-            index--;
-            return result;
+            return pointer.item;
         }
 
+        @Override
+        public boolean remove() {
+            unlink(pointer);
+            return true;
+        }
+
+        @Override
+        public T set(T item) {
+            T previous = pointer.item;
+            pointer.item = item;
+            return previous;
+        }
+
+        @Override
+        public void toFirst() {
+            pointer = first;
+        }
+        @Override
+        public void toLast() {
+            pointer = last;
+        }
+
+        @Override
+        public void insert(T t) {
+            Node insertion = new Node(pointer.previous, t, pointer.next);
+            pointer.previous.next = insertion;
+            pointer.next.previous = insertion;
+        }
+        @Override
         public boolean hasNext() {
-            return index < list.size;
+            return pointer.next != null;
         }
-
 
     }
 

@@ -22,7 +22,6 @@ public class Department {
     class DepartmentInfo {
         private Map<String, Set<Employee>> positionsEmployee;
         private Set<String> positions;
-//        private Map<Employee, Map<String, Map<LocalDate, LocalDate>>> employeeInfo;
     }
 
     @Getter
