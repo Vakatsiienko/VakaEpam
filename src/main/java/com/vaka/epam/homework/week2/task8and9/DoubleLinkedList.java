@@ -6,7 +6,7 @@ package com.vaka.epam.homework.week2.task8and9;
 //9.	Реализовать двухсвязанный список.
 // Реализация должна предусматривать наличие элемента header,
 // в котором есть ссылка на первй и последний элемент списка(DoubleLinkedList).
-public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements List<T> {
+public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWayList<T> {
 
     private int size;
 

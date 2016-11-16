@@ -135,17 +135,17 @@ public abstract class ListTest {
 
     @Test
     public void testContains() throws Exception {
-        List<String> list = new DoubleLinkedList<>();
-        list.add("first element");
-        list.add("second element");
-        list.add("third element");
+        List<Integer> list = createEmptyList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
         list.add(null);
 
-        Assert.assertTrue(list.contains("first element"));
-        Assert.assertTrue(list.contains("second element"));
-        Assert.assertTrue(list.contains("third element"));
+        Assert.assertTrue(list.contains(1));
+        Assert.assertTrue(list.contains(2));
+        Assert.assertTrue(list.contains(3));
         Assert.assertTrue(list.contains(null));
-        Assert.assertFalse(list.contains("someElement"));
+        Assert.assertFalse(list.contains(-1));
         list.remove(null);
         Assert.assertFalse(list.contains(null));
     }
