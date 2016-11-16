@@ -7,20 +7,26 @@ import org.junit.Test;
  * Created by Iaroslav on 11/4/2016.
  */
 public class RSATest {
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void testEncrypt() throws Exception {
         RSA rsa = new RSA();
         String message = "Hello!";
-        String coded = rsa.encrypt(message);
-        Assert.assertNotEquals(message, coded);
+        String encrypted = rsa.encrypt(message);
+        rsa.generateKeys();
+        encrypted = rsa.encrypt(message);
+        Assert.assertNotEquals(message, encrypted);
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void testDecrypt() throws Exception {
         RSA rsa = new RSA();
         String message = "Hello!";
 
         String encrypted = rsa.encrypt(message);
+        rsa.generateKeys();
+
+        encrypted = rsa.encrypt(message);
+
         Assert.assertNotEquals(message, encrypted);
 
         String decrypted = rsa.decrypt(encrypted);

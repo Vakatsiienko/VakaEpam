@@ -78,9 +78,9 @@ public class Solution {
     public static long euclideanAlgorithm(long x, long y) {
         // Check incoming parameters
         if (x == 0L)
-            return y;
-        if (y == 0L)
             return x;
+        if (y == 0L)
+            return y;
         if (x == y)
             return x;
         if (x == 1L || y == 1L)
