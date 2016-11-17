@@ -158,7 +158,7 @@ public class SingleLinkedList<T> extends AbstractLinkedList<T> implements List<T
         public void remove() {
             checkModifications();
             if (pointer == null)
-                throw new NullPointerException();
+                throw new NoSuchElementException();
             unlink(pointer);
             modCount++;
         }
@@ -167,7 +167,7 @@ public class SingleLinkedList<T> extends AbstractLinkedList<T> implements List<T
         public T set(T item) {
             checkModifications();
             if (pointer == null)
-                throw new NullPointerException();
+                throw new NoSuchElementException();
             T previous = pointer.item;
             pointer.item = item;
             return previous;

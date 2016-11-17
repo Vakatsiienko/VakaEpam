@@ -3,6 +3,8 @@ package com.vaka.epam.homework.week2.task8and9;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 /**
  * Created by Iaroslav on 11/15/2016.
  */
@@ -63,7 +65,7 @@ public abstract class IteratorTest {
         Assert.assertFalse(list.contains(5544));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = NoSuchElementException.class)
     public void testSet() throws Exception {
         List<Integer> list = createList();
         LLIterator<Integer> iterator = list.iterator();

@@ -166,9 +166,11 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWa
         @Override
         public T previous() {
             checkModifications();
-            if (pointer == null)
+            if (pointer == null) {
+                if (list.last == null)
+                    throw new NoSuchElementException();
                 pointer = list.last;
-            else pointer = pointer.previous;
+            } else pointer = pointer.previous;
             return pointer.item;
         }
 
@@ -176,7 +178,7 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWa
         public void remove() {
             checkModifications();
             if (pointer == null)
-                throw new NullPointerException();
+                throw new NoSuchElementException();
             unlink(pointer);
             modCount++;
         }
@@ -185,7 +187,7 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWa
         public T set(T item) {
             checkModifications();
             if (pointer == null) {
-                throw new NullPointerException();
+                throw new NoSuchElementException();
             }
             T previous = pointer.item;
             pointer.item = item;
@@ -196,7 +198,7 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWa
         public void insertBefore(T t) {
             checkModifications();
             if (pointer == null)
-                throw new NullPointerException();
+                throw new NoSuchElementException();
             Node insertion = new Node(pointer.previous, t, pointer);
             if (pointer != first)
                 pointer.previous.next = insertion;
@@ -207,7 +209,7 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWa
         public void insertAfter(T t) {
             checkModifications();
             if (pointer == null)
-                throw new NullPointerException();
+                throw new NoSuchElementException();
             Node insertion = new Node(pointer, t, pointer.next);
             if (pointer != last)
                 pointer.next.previous = insertion;
