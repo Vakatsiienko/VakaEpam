@@ -26,30 +26,53 @@ public final class CollectionsUtil {
                 .collect(Collectors.toCollection(collectionFactory));
     }
 
+    // Используя generics написать сортировку списка, в котором могут храниться
+// элементы некоторого класса или его наследников методом Quicksort,
+// сравнение элементов осуществлять с помощью Comparator
+    public static <T> List<T> qSort(List<T> list, Comparator<? super T> comparator) {
+        int n = list.size();
+        int i = 0;
+        int j = n-1;
+        T pivot = getPivot(list, comparator);
+        while (i <= j) {
+            while (comparator.compare(list.get(i), pivot) < 0 ) {
+                i++;
+            }
+            while (comparator.compare(list.get(j), pivot) > 0 ) {
+                j--;
+            }
+            if (i <= j) {
+                Collections.swap(list,i,j);
+                i++;
+                j--;
+            }
+        }
+        if (j>0){
+            qSort(list.subList(0, j + 1), comparator);
+        }
+        if (i<n){
+            qSort(list.subList(i,n), comparator);
+        }
+        return list;
+    }
 
-//    public static <T> Collection<T> qSort(List<T> array, Comparator<T> comparator) {
-//        int n = array.size();
-//        int i = 0;
-//        int j = n-1;
-//        int x = array.get(rand.nextInt(n));
-//        while (i <= j) {
-//            while (array.get(i) < x) {
-//                i++;
-//            }
-//            while (array.get(j) > x) {
-//                j--;
-//            }
-//            if (i <= j) {
-//                Collections.swap(array,i,j);
-//                i++;
-//                j--;
-//            }
-//        }
-//        if (j>0){
-//            qSort(array.subList(0, j + 1));
-//        }
-//        if (i<n){
-//            qSort(array.subList(i,n));
-//        }
-//    }
+    private static <T> T getPivot(List<T> list, Comparator<? super T> comparator) {
+        Random random = new Random();
+        int index1 = random.nextInt(list.size());
+        int index2 = random.nextInt(list.size());
+        int index3 = random.nextInt(list.size());
+        T elem1 = list.get(index1);
+        T elem2 = list.get(index2);
+        T elem3 = list.get(index3);
+        if (comparator.compare(elem1, elem2) >= 0) {
+            if (comparator.compare(elem1, elem3) >= 0) {
+                if (comparator.compare(elem3, elem2) >= 0)
+                    return list.get(index3);
+                return list.get(index2);
+            }
+            return list.get(index1);
+        } else if (comparator.compare(elem1, elem3) >= 0)
+            return list.get(index1);
+        return list.get(index3);
+    }
 }

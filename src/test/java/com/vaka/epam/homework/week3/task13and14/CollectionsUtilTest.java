@@ -36,6 +36,18 @@ public class CollectionsUtilTest {
         }
     }
 
+    @Test
+    public void testQSort() throws Exception {
+        List<Integer> result = CollectionsUtil.qSort(createList(), Integer::compareTo);
+        for (int i = 0; i < result.size(); i++) {
+            if (i + 1 != result.size())
+                Assert.assertTrue(
+                        String.format("%s element = %s, next element = %s", i, result.get(i), result.get(i + 1)),
+                        result.get(i) <= result.get(i + 1));
+
+        }
+    }
+
     public List<Integer> createList(){
         List<Integer> list = new ArrayList<>(10000);
         Random random = new Random();

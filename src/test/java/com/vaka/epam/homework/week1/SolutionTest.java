@@ -46,7 +46,7 @@ public class  SolutionTest {
         x = 0;
         y = 0;
         Assert.assertEquals(x * y, Solution.multiplyByKaratsuba(x, y));
-        x = 110;
+        x = -110;
         y = 0;
         Assert.assertEquals(x * y, Solution.multiplyByKaratsuba(x, y));
     }
