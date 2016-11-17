@@ -28,6 +28,7 @@ public class Text {
         text.content = Sentence.parseContent(content);
         return text;
     }
+
     public static Text buildEmpty() {
         Text text = new Text();
         text.header = Optional.empty();
@@ -53,7 +54,7 @@ public class Text {
         System.out.println(header);
     }
 
-    public void print(){
+    public void print() {
         System.out.println(this);
     }
 

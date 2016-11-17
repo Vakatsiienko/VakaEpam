@@ -21,7 +21,7 @@ public abstract class AbstractLinkedList<T> implements List<T> {
         if (size() == 0)
             return -1;
         int index = 0;
-        Iterator iterator = iterator();
+        LLIterator iterator = iterator();
         if (t == null) {
             do {
                 if (iterator.next() == null)
@@ -42,7 +42,7 @@ public abstract class AbstractLinkedList<T> implements List<T> {
     public boolean remove(T removing) {
         if (size() == 0)
             return false;
-        Iterator iterator = iterator();
+        LLIterator iterator = iterator();
         Object current;
         if (removing == null) {
             do {
@@ -68,11 +68,12 @@ public abstract class AbstractLinkedList<T> implements List<T> {
 
     @Override
     public void clear() {
-        Iterator iterator = iterator();
-        if (iterator.hasNext())
+        LLIterator iterator = iterator();
+        while (iterator.hasNext()){
             iterator.next();
-        while (size() != 0)
             iterator.remove();
+
+        }
     }
 
     protected void checkIndexForGet(int index) {

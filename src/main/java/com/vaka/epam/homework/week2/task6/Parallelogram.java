@@ -14,6 +14,7 @@ import org.apache.commons.math3.util.Precision;
 public class Parallelogram extends Shape {
     private double a;
     private double b;
+
     @Override
     public double area() {
         return Precision.round(a * b, 2);

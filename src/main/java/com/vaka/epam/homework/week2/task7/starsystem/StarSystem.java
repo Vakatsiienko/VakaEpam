@@ -3,7 +3,9 @@ package com.vaka.epam.homework.week2.task7.starsystem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Iaroslav on 11/9/2016.

@@ -1,5 +1,7 @@
 package com.vaka.epam.homework.week2.task8and9;
 
+import java.util.NoSuchElementException;
+
 /**
  * Created by Iaroslav on 11/6/2016.
  */
@@ -120,9 +122,9 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWa
     }
 
     private class Node {
-        public T item;
-        public Node next;
-        public Node previous;
+        private T item;
+        private Node next;
+        private Node previous;
 
         private Node(T t) {
             item = t;
@@ -148,15 +150,22 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWa
         }
 
         @Override
-        public T next() {
-            if (pointer == null)
+        public T next() throws NoSuchElementException {
+            checkModifications();
+            if (first == null)
+                throw new NoSuchElementException();
+            else if (pointer == null)
                 pointer = list.first;
-            else pointer = pointer.next;
+            else if (pointer.next != null)
+                pointer = pointer.next;
+            else
+                throw new NoSuchElementException();
             return pointer.item;
         }
 
         @Override
         public T previous() {
+            checkModifications();
             if (pointer == null)
                 pointer = list.last;
             else pointer = pointer.previous;
@@ -164,19 +173,20 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWa
         }
 
         @Override
-        public T remove() {
+        public void remove() {
+            checkModifications();
             if (pointer == null)
                 throw new NullPointerException();
             unlink(pointer);
-            T item = pointer.item;
-            pointer = pointer.next;
-            return item;
+            modCount++;
         }
 
         @Override
         public T set(T item) {
-            if (pointer == null)
+            checkModifications();
+            if (pointer == null) {
                 throw new NullPointerException();
+            }
             T previous = pointer.item;
             pointer.item = item;
             return previous;
@@ -184,6 +194,7 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWa
 
         @Override
         public void insertBefore(T t) {
+            checkModifications();
             if (pointer == null)
                 throw new NullPointerException();
             Node insertion = new Node(pointer.previous, t, pointer);
@@ -194,11 +205,12 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWa
 
         @Override
         public void insertAfter(T t) {
+            checkModifications();
             if (pointer == null)
                 throw new NullPointerException();
             Node insertion = new Node(pointer, t, pointer.next);
             if (pointer != last)
-            pointer.next.previous = insertion;
+                pointer.next.previous = insertion;
             pointer.next = insertion;
         }
 
@@ -217,7 +229,8 @@ public class DoubleLinkedList<T> extends AbstractLinkedList<T> implements BothWa
                 return first != null;
             return pointer.previous != null;
         }
-        private void checkModifications(){
+
+        private void checkModifications() {
             if (modCount != list.modCount)
                 throw new ModificationException();
         }

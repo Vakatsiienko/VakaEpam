@@ -2,12 +2,10 @@ package com.vaka.epam.homework.week2.task10;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.SortedMap;
-import java.util.TreeMap;
 
 /**
  * Created by Iaroslav on 11/9/2016.

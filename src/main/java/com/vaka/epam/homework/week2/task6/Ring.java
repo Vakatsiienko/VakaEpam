@@ -13,6 +13,7 @@ import org.apache.commons.math3.util.Precision;
 @AllArgsConstructor
 public class Ring extends Shape {
     private double r;
+
     @Override
     public double area() {
         return Precision.round(Math.PI * r, 2);

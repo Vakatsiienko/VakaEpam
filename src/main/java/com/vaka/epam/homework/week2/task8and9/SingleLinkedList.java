@@ -1,5 +1,7 @@
 package com.vaka.epam.homework.week2.task8and9;
 
+import java.util.NoSuchElementException;
+
 /**
  * Created by Iaroslav on 11/6/2016.
  */
@@ -82,7 +84,7 @@ public class SingleLinkedList<T> extends AbstractLinkedList<T> implements List<T
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public LLIterator<T> iterator() {
         return new SingleLinkLIter();
     }
 
@@ -125,7 +127,7 @@ public class SingleLinkedList<T> extends AbstractLinkedList<T> implements List<T
 
     }
 
-    private class SingleLinkLIter implements Iterator<T> {
+    private class SingleLinkLIter implements LLIterator<T> {
 
         private SingleLinkedList<T> list;
 
@@ -139,27 +141,26 @@ public class SingleLinkedList<T> extends AbstractLinkedList<T> implements List<T
         }
 
         @Override
-        public T next() {
+        public T next() throws NoSuchElementException {
+            checkModifications();
             if (first == null)
-                throw new NullPointerException();
+                throw new NoSuchElementException();
             else if (pointer == null) {
                 pointer = list.first;
-            } else pointer = pointer.next;
-            checkModifications();
+            } else if (pointer.next != null)
+                pointer = pointer.next;
+            else
+                throw new NoSuchElementException();
             return pointer.item;
         }
 
         @Override
-        public T remove() {
+        public void remove() {
             checkModifications();
             if (pointer == null)
                 throw new NullPointerException();
-            Node next = pointer.next;
             unlink(pointer);
             modCount++;
-            T item = pointer.item;
-            pointer = next;
-            return item;
         }
 
         @Override
@@ -180,9 +181,9 @@ public class SingleLinkedList<T> extends AbstractLinkedList<T> implements List<T
             return pointer.next != null;
         }
 
-        private void checkModifications(){
+        private void checkModifications() {
             if (modCount != list.modCount)
-                throw new ModificationException();
+                throw new ModificationException(String.format("iterator modCound: %s, list modCount: %s", modCount, list.modCount));
         }
 
     }

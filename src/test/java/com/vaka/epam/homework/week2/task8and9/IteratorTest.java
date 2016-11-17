@@ -10,7 +10,7 @@ public abstract class IteratorTest {
 
     @Test
     public void testNext() throws Exception {
-        Iterator<Integer> iterator = createList().iterator();
+        LLIterator<Integer> iterator = createList().iterator();
         int i = 0;
         while (iterator.hasNext()) {
             Assert.assertTrue(iterator.next() == i);
@@ -21,7 +21,7 @@ public abstract class IteratorTest {
     @Test(expected = ModificationException.class)
     public void testHasNext() throws Exception {
         List<Integer> list = createList();
-        Iterator<Integer> iterator = list.iterator();
+        LLIterator<Integer> iterator = list.iterator();
         list.add(60000);
         while (iterator.next() != 60000) {
         }
@@ -38,32 +38,35 @@ public abstract class IteratorTest {
     @Test
     public void testRemove() throws Exception {
         List<Integer> list = createList();
-        Iterator<Integer> iterator = list.iterator();
+        LLIterator<Integer> iterator = list.iterator();
         list.add(12345);
 
-        while (iterator.hasNext())
+        while (iterator.hasNext()) {
             iterator.next();
-        Assert.assertTrue(12345 == iterator.remove());
+            iterator.remove();
+        }
         Assert.assertFalse(list.contains(12345));
 
         list.addOnIndex(0, 54321);
         iterator = list.iterator();
         iterator.next();
-        Assert.assertTrue(54321 == iterator.remove());
+        iterator.remove();
         Assert.assertFalse(list.contains(54321));
 
+        list = createList();
+        iterator = list.iterator();
         list.addOnIndex(500, 5544);
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 501; i++) {
             iterator.next();
         }
-        Assert.assertTrue(5544 == iterator.remove());
+        iterator.remove();
         Assert.assertFalse(list.contains(5544));
     }
 
     @Test(expected = NullPointerException.class)
     public void testSet() throws Exception {
         List<Integer> list = createList();
-        Iterator<Integer> iterator = list.iterator();
+        LLIterator<Integer> iterator = list.iterator();
 
         iterator.set(6000);
         Assert.assertFalse(list.contains(6000));

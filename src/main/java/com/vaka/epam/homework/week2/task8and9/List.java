@@ -3,7 +3,7 @@ package com.vaka.epam.homework.week2.task8and9;
 /**
  * Created by Iaroslav on 11/8/2016.
  */
-public interface List<T> {
+public interface List<T> extends Iterable<T> {
 
     int size();
 
@@ -11,7 +11,8 @@ public interface List<T> {
 
     boolean contains(T t);
 
-    Iterator<T> iterator();
+    @Override
+    LLIterator<T> iterator();
 
     boolean add(T t);
 

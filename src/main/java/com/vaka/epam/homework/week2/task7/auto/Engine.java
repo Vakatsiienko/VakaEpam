@@ -17,7 +17,8 @@ public class Engine {
 
     private int rpm;
 
-    @Setter private Status status;
+    @Setter
+    private Status status;
 
     public Engine(int horsepower, int rpm, Status status) {
         this.horsepower = horsepower;

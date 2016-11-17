@@ -49,7 +49,8 @@ public class RSA {
     public String encrypt(String message) {
         if (keysGenerated)
             return new BigInteger(message.getBytes()).modPow(new BigInteger(e.toString()), new BigInteger(n.toString())).toString();
-        else throw new IllegalStateException("Public and private keys are not generated, you should call generateKeys() at first");
+        else
+            throw new IllegalStateException("Public and private keys are not generated, you should call generateKeys() at first");
     }
 
     public String decrypt(String message) {
@@ -60,7 +61,6 @@ public class RSA {
     }
 
     /**
-     *
      * @param n multiplication of first and second prime
      * @param e exponent - Small number that doesn't have common denominators with FiN
      * @param d e modInverse(fiN)
@@ -70,13 +70,13 @@ public class RSA {
         this.e = e;
         this.d = d;
         keysGenerated = true;
-        if(!checkKeys()) {
+        if (!checkKeys()) {
             keysGenerated = false;
             throw new IllegalArgumentException("Wrong keys");
         }
     }
 
-    public boolean checkKeys(){
+    public boolean checkKeys() {
         String hello = "hello";
         String encryptedStr = this.encrypt(hello);
         if (hello.equals(encryptedStr))

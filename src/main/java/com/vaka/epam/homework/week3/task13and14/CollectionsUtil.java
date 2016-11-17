@@ -32,26 +32,26 @@ public final class CollectionsUtil {
     public static <T> List<T> qSort(List<T> list, Comparator<? super T> comparator) {
         int n = list.size();
         int i = 0;
-        int j = n-1;
+        int j = n - 1;
         T pivot = getPivot(list, comparator);
         while (i <= j) {
-            while (comparator.compare(list.get(i), pivot) < 0 ) {
+            while (comparator.compare(list.get(i), pivot) < 0) {
                 i++;
             }
-            while (comparator.compare(list.get(j), pivot) > 0 ) {
+            while (comparator.compare(list.get(j), pivot) > 0) {
                 j--;
             }
             if (i <= j) {
-                Collections.swap(list,i,j);
+                Collections.swap(list, i, j);
                 i++;
                 j--;
             }
         }
-        if (j>0){
+        if (j > 0) {
             qSort(list.subList(0, j + 1), comparator);
         }
-        if (i<n){
-            qSort(list.subList(i,n), comparator);
+        if (i < n) {
+            qSort(list.subList(i, n), comparator);
         }
         return list;
     }
