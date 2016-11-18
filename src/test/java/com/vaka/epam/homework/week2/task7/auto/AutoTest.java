@@ -26,7 +26,7 @@ public class AutoTest {
         System.out.flush();
         System.setOut(old);
 
-        Assert.assertEquals("Bugatty Veyron 16.4\r\n", baos.toString());
+        Assert.assertEquals("Bugatty Veyron 16.4\n", baos.toString());
     }
 
     @Test(expected = DrivingException.class)
