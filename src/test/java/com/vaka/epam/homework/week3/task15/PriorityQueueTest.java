@@ -82,7 +82,6 @@ public class PriorityQueueTest {
         Assert.assertTrue(queue.numberOfPriorities() == 10);
         Assert.assertTrue(queue.extractMinimum() == null);
         Assert.assertEquals(queue.queueRealization(), LinkedList.class);
-        PriorityQueueImpl.createPriorityQueue(-10, LinkedList::new);
     }
 
     public PriorityQueue<Integer> createFullPQueue() {
