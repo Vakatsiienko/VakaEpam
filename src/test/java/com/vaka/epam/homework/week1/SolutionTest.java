@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * Created by Iaroslav on 10/29/2016.
  */
-public class  SolutionTest {
+public class SolutionTest {
     @Test
     public void testBitsQuantity() throws Exception {
         Assert.assertEquals(Long.SIZE, Solution.getLongBitsQuantity());
@@ -61,7 +61,7 @@ public class  SolutionTest {
 
         int multiplier = 42;
         long a = ((long) Integer.MAX_VALUE) * multiplier;
-        long b = ((long)  Short.MAX_VALUE) * multiplier;
+        long b = ((long) Short.MAX_VALUE) * multiplier;
         long euclideanGcd = Solution.euclideanAlgorithm(a, b);
         long gcd = -1, min = Math.min(a, b), max = Math.max(a, b);
         for (long i = euclideanGcd; i <= min; i++) {

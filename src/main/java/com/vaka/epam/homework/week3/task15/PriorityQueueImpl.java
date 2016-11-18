@@ -1,7 +1,5 @@
 package com.vaka.epam.homework.week3.task15;
 
-import lombok.Getter;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;

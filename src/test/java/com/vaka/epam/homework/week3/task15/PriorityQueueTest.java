@@ -2,7 +2,6 @@ package com.vaka.epam.homework.week3.task15;
 
 import org.junit.Assert;
 import org.junit.Test;
-import sun.misc.Queue;
 
 import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -51,7 +50,7 @@ public class PriorityQueueTest {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 queue.insert(i, j);
-           }
+            }
         }
         Assert.assertTrue(queue.size() == 100);
     }
@@ -71,10 +70,10 @@ public class PriorityQueueTest {
         Assert.assertTrue(queue.size() == 0);
 
 
-
         PriorityQueueImpl.createPriorityQueue(-10, LinkedList::new);
 
     }
+
     @Test
     public void testCreateDefaultPriorityQueue() throws Exception {
         PriorityQueue<Integer> queue = PriorityQueueImpl.createDefaultPriorityQueue();

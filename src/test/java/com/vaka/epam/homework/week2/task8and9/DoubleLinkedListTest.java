@@ -4,7 +4,7 @@ package com.vaka.epam.homework.week2.task8and9;
 /**
  * Created by Iaroslav on 11/9/2016.
  */
-public class DoubleLinkedListTest extends ListTest{
+public class DoubleLinkedListTest extends ListTest {
 
     @Override
     public List<Integer> createCollectedList() {

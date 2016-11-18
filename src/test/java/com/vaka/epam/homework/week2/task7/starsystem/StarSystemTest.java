@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Optional;
 
 /**
  * Created by Iaroslav on 11/9/2016.
@@ -43,7 +41,7 @@ public class StarSystemTest {
                 "Alpha Centauri A, Alpha Centauri B, Proxima Centauri");
     }
 
-    public StarSystem createSystem(){
+    public StarSystem createSystem() {
         StarSystem solarSystem = new StarSystem("Solar System", new Star("Sun"));
         solarSystem.getPlanets().add(new Planet("Mercury", new ArrayList<Satellite>()));
 

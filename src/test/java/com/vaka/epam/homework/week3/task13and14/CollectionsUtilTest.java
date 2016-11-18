@@ -26,7 +26,7 @@ public class CollectionsUtilTest {
 
     @Test
     public void testUnionAndSortWithComparator() throws Exception {
-        List<Integer> result = CollectionsUtil.unionAndSort(createList(), createList(),(v1, v2) -> v1.compareTo(v2) * -1, ArrayList::new);
+        List<Integer> result = CollectionsUtil.unionAndSort(createList(), createList(), (v1, v2) -> v1.compareTo(v2) * -1, ArrayList::new);
         for (int i = 0; i < result.size(); i++) {
             if (i + 1 != result.size())
                 Assert.assertTrue(
@@ -48,7 +48,7 @@ public class CollectionsUtilTest {
         }
     }
 
-    public List<Integer> createList(){
+    public List<Integer> createList() {
         List<Integer> list = new ArrayList<>(10000);
         Random random = new Random();
         for (int i = 0; i < 10000; i++) {

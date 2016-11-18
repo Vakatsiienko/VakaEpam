@@ -84,6 +84,5 @@ public abstract class IteratorTest {
     }
 
 
-
     public abstract List<Integer> createList();
 }

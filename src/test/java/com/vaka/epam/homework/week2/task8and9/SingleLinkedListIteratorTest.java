@@ -9,10 +9,10 @@ public class SingleLinkedListIteratorTest extends IteratorTest {
 
     @Override
     public List<Integer> createList() {
-            List<Integer> list = new SingleLinkedList<>();
-            for (int i = 0; i < 1000; i++) {
-                list.add(i);
-            }
-            return list;
+        List<Integer> list = new SingleLinkedList<>();
+        for (int i = 0; i < 1000; i++) {
+            list.add(i);
         }
+        return list;
+    }
 }

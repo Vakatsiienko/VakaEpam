@@ -69,7 +69,7 @@ public abstract class AbstractLinkedList<T> implements List<T> {
     @Override
     public void clear() {
         LLIterator iterator = iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             iterator.next();
             iterator.remove();
 
