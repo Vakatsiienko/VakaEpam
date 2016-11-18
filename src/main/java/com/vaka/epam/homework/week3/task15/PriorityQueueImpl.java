@@ -1,20 +1,28 @@
 package com.vaka.epam.homework.week3.task15;
 
-import java.util.*;
+import lombok.Getter;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+import java.util.function.Supplier;
 
 /**
  * Created by Iaroslav on 11/17/2016.
  */
 public class PriorityQueueImpl<T> implements PriorityQueue<T> {
     private Map<Integer, Queue<T>> repository;
+    private final Class queueRealization;
     private final int priorities;
 
-    private PriorityQueueImpl(int priorities) {
+    private PriorityQueueImpl(int priorities, Supplier<? extends Queue<T>> supplier) {
         repository = new HashMap<>();
         this.priorities = priorities;
         for (int i = 0; i < priorities; i++) {
-            repository.put(i, new LinkedList<>());
+            repository.put(i, supplier.get());
         }
+        queueRealization = repository.get(0).getClass();
     }
 
     @Override
@@ -45,14 +53,25 @@ public class PriorityQueueImpl<T> implements PriorityQueue<T> {
                 .mapToInt(Queue::size).sum();
     }
 
+    @Override
+    public Class queueRealization() {
+        return queueRealization;
+    }
+
     /**
      * @param maxPriority count of priorities starts from 0 and end with given number.
      * @throws IllegalArgumentException if given number < 0
      */
-    public static <E> PriorityQueue<E> createPriorityQueue(int maxPriority) {
+    public static <E> PriorityQueue<E> createPriorityQueue(int maxPriority, Supplier<? extends Queue<E>> supplier) {
         if (maxPriority < 0)
             throw new IllegalArgumentException();
-        return new PriorityQueueImpl<>(maxPriority);
+        return new PriorityQueueImpl<>(maxPriority, supplier);
     }
 
+    /**
+     * @return PriorityQueue with 10 priorities(0-9) and Supplier with LinkedList as Queue realisation
+     */
+    public static <E> PriorityQueue<E> createDefaultPriorityQueue() {
+        return new PriorityQueueImpl<>(10, LinkedList::new);
+    }
 }

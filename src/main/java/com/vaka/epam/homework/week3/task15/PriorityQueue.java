@@ -19,4 +19,6 @@ public interface PriorityQueue<T> {
 
     int size();
 
+    Class queueRealization();
+
 }
