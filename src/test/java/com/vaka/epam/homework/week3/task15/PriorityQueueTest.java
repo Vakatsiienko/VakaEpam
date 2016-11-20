@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -21,6 +22,14 @@ public class PriorityQueueTest {
         }
         queue.insert(-1, 100);
         Assert.assertTrue(queue.extractMinimum() == null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testInsertNull() throws Exception {
+
+        PriorityQueue<Integer> queue = createFullPQueue();
+        queue.insert(0, null);
+
     }
 
     @Test
@@ -82,6 +91,31 @@ public class PriorityQueueTest {
         Assert.assertTrue(queue.extractMinimum() == null);
         Assert.assertEquals(queue.queueRealization(), LinkedList.class);
     }
+
+    @Test
+    public void testCreateInnerSortedPriorityQueue() throws Exception {
+        PriorityQueue<Integer> queue = PriorityQueueImpl.createInnerSortedPriorityQueue(42, Integer::compareTo);
+        Assert.assertTrue(queue.size() == 0);
+        Assert.assertTrue(queue.numberOfPriorities() == 42);
+        Assert.assertTrue(queue.extractMinimum() == null);
+        Assert.assertEquals(queue.queueRealization(), java.util.PriorityQueue.class);
+
+        Random r = new Random();
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                queue.insert(i, r.nextInt());
+            }
+        }
+
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 5; j++) {
+                Assert.assertTrue(queue.extractMinimum() <= queue.extractMinimum());
+            }
+        }
+    }
+
+
+
 
     public PriorityQueue<Integer> createFullPQueue() {
         PriorityQueue<Integer> queue = PriorityQueueImpl.createDefaultPriorityQueue();

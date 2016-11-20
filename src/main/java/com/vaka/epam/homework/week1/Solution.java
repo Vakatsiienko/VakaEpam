@@ -48,8 +48,8 @@ public class Solution {
      * @throws IllegalArgumentException pos cannot be lower than 0
      */
     public static int changeBit(int number, int pos, boolean bool) {
-        if (pos < 0)
-            throw new IllegalArgumentException("pos cannot be lower than 0");
+        if (pos < 0  || pos > Integer.SIZE)
+            throw new IllegalArgumentException("pos cannot be lower than 0 or greater than Integer.SIZE");
         return bool ? number ^ (1 << pos) : number | (1 << pos);
     }
 

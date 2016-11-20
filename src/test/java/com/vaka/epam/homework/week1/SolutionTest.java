@@ -23,6 +23,7 @@ public class SolutionTest {
         Assert.assertEquals(0, Solution.changeBit(1, 0, true));
         Assert.assertEquals(2147418111, Solution.changeBit(Integer.MAX_VALUE, 16, true));
         Assert.assertEquals(-2147418112, Solution.changeBit(Integer.MIN_VALUE, 16, false));
+        Assert.assertEquals(-2147418112, Solution.changeBit(Integer.MIN_VALUE, 300, false));
     }
 
     @Test

@@ -12,12 +12,6 @@ public final class CollectionsUtil {
     private CollectionsUtil() {
     }
 
-    public static <T extends Comparable<? super T>, E extends Collection<T>, C extends Collection<T>> C unionAndSort
-            (E first, E second, Supplier<C> collectionFactory) {
-        return Stream.concat(first.stream(), second.stream())
-                .sorted()
-                .collect(Collectors.toCollection(collectionFactory));
-    }
 
     public static <T, E extends Collection<T>, C extends Collection<T>> C unionAndSort
             (E first, E second, Comparator<? super T> comparator, Supplier<C> collectionFactory) {

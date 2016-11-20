@@ -13,18 +13,6 @@ import java.util.Random;
 public class CollectionsUtilTest {
 
     @Test
-    public void testUnionAndSortComparable() throws Exception {
-        List<Integer> result = CollectionsUtil.unionAndSort(createList(), createList(), ArrayList::new);
-        for (int i = 0; i < result.size(); i++) {
-            if (i + 1 != result.size())
-                Assert.assertTrue(
-                        String.format("%s element = %s, next element = %s", i, result.get(i), result.get(i + 1)),
-                        result.get(i) <= result.get(i + 1));
-
-        }
-    }
-
-    @Test
     public void testUnionAndSortWithComparator() throws Exception {
         List<Integer> result = CollectionsUtil.unionAndSort(createList(), createList(), (v1, v2) -> v1.compareTo(v2) * -1, ArrayList::new);
         for (int i = 0; i < result.size(); i++) {

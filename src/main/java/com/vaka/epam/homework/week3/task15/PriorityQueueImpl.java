@@ -1,15 +1,13 @@
 package com.vaka.epam.homework.week3.task15;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 import java.util.function.Supplier;
 
 /**
  * Created by Iaroslav on 11/17/2016.
  */
 public class PriorityQueueImpl<T> implements PriorityQueue<T> {
+    //TODO add own realization of heap
     private Map<Integer, Queue<T>> repository;
     private final Class queueRealization;
     private final int priorities;
@@ -25,7 +23,7 @@ public class PriorityQueueImpl<T> implements PriorityQueue<T> {
 
     @Override
     public void insert(int priority, T value) {
-        if (!repository.containsKey(priority))
+        if (!repository.containsKey(priority) || value == null)
             throw new IllegalArgumentException();
         repository.get(priority).offer(value);
     }
@@ -57,13 +55,13 @@ public class PriorityQueueImpl<T> implements PriorityQueue<T> {
     }
 
     /**
-     * @param maxPriority count of priorities starts from 0 and end with given number.
+     * @param prioritiesCount count of priorities starts from 0 and end with given number.
      * @throws IllegalArgumentException if given number < 0
      */
-    public static <E> PriorityQueue<E> createPriorityQueue(int maxPriority, Supplier<? extends Queue<E>> supplier) {
-        if (maxPriority < 0)
+    public static <E> PriorityQueue<E> createPriorityQueue(int prioritiesCount, Supplier<? extends Queue<E>> supplier) {
+        if (prioritiesCount < 0)
             throw new IllegalArgumentException();
-        return new PriorityQueueImpl<>(maxPriority, supplier);
+        return new PriorityQueueImpl<>(prioritiesCount, supplier);
     }
 
     /**
@@ -71,5 +69,17 @@ public class PriorityQueueImpl<T> implements PriorityQueue<T> {
      */
     public static <E> PriorityQueue<E> createDefaultPriorityQueue() {
         return new PriorityQueueImpl<>(10, LinkedList::new);
+    }
+
+    /**
+     * @param prioritiesCount count of priorities starts from 0 and end with given number.
+     * @param comparator      will compare elements in each priority queue
+     * @throws IllegalArgumentException if given number < 0
+     */
+    public static <E> PriorityQueue<E> createInnerSortedPriorityQueue(int prioritiesCount, Comparator<E> comparator) {
+        if (prioritiesCount < 0)
+            throw new IllegalArgumentException();
+        Supplier<java.util.PriorityQueue<E>> supplier = () -> new java.util.PriorityQueue(comparator);
+        return new PriorityQueueImpl<E>(prioritiesCount, supplier);
     }
 }
