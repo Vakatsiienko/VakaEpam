@@ -10,9 +10,4 @@ public class I extends Figure {
         return new I();
     }
 
-    @Override
-    public void getSuperInstance() {
-        Figure figure = getEmptyInstance();
-
-    }
 }

@@ -7,6 +7,9 @@ import java.util.*;
 /**
  * Created by Iaroslav on 11/19/2016.
  */
+//20. Паттерн Factory Method. Фигуры игры «тетрис». Реализовать процесс слу-
+//        чайного выбора фигуры из конечного набора фигур. Предусмотреть появ-
+//        ление супер-фигур с большим числом клеток, чем обычные.
 public abstract class Figure {
     private static Random random = new Random();
     private static final List<Figure> figures;

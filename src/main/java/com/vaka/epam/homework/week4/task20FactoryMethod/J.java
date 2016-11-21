@@ -9,8 +9,4 @@ public class J extends Figure {
         return new J();
     }
 
-    @Override
-    public void getSuperInstance() {
-
-    }
 }
