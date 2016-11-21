@@ -1,11 +1,10 @@
-package com.vaka.epam.homework.week4.task19;
+package com.vaka.epam.homework.week4.task19Prototype;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,8 +21,8 @@ public class Article implements Prototype{
     private String title;
     private String description;
     private String summary;
-    private String[] chapters;
-    private String[] href;
+    private List<String> chapters;
+    private List<String> href;
     private List<Byte[]> files;
 
     @Override
@@ -32,9 +31,10 @@ public class Article implements Prototype{
         article.title = title;
         article.description = description;
         article.summary = summary;
-        article.chapters = chapters;
-        //TODO add ArraysCopy
-        article.href = href;
+        article.chapters = new ArrayList<>(chapters.size());
+        Collections.copy(article.chapters, chapters);
+        article.href = new ArrayList<>(href.size());
+        Collections.copy(article.href, href);
         article.files = new ArrayList<>();
         Collections.copy(article.files, files);
         return article;

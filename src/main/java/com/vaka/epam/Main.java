@@ -1,29 +1,20 @@
 package com.vaka.epam;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by iaroslav on 14.11.16.
  */
-public class Main<T> {
+public class Main {
     public static void main(String[] args) {
-        List list = new LinkedList<>();
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
-        list.add(null);
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
-        Object object = new Object();
-        list.add(object);
-        int index = list.indexOf(object);
-        System.out.println(index);
+        if (args instanceof Object)
+            System.out.printf("as");
+        else
+            System.out.println("sa");
+
     }
+
 }

@@ -1,4 +1,4 @@
-package com.vaka.epam.homework.week4.task20;
+package com.vaka.epam.homework.week4.task20FactoryMethod;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

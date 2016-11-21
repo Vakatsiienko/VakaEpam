@@ -1,4 +1,4 @@
-package com.vaka.epam.homework.week4.task20;
+package com.vaka.epam.homework.week4.task20FactoryMethod;
 
 /**
  * Created by Iaroslav on 11/19/2016.
@@ -6,13 +6,13 @@ package com.vaka.epam.homework.week4.task20;
 public class I extends Figure {
 
     @Override
-    public Figure getInstance() {
+    public Figure getEmptyInstance() {
         return new I();
     }
 
     @Override
     public void getSuperInstance() {
-        Figure figure = getInstance();
+        Figure figure = getEmptyInstance();
 
     }
 }

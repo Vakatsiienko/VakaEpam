@@ -1,4 +1,4 @@
-package com.vaka.epam.homework.week4.task21;
+package com.vaka.epam.homework.week4.task21Strategy;
 
 /**
  * Created by Iaroslav on 11/19/2016.
@@ -9,7 +9,5 @@ package com.vaka.epam.homework.week4.task21;
 // персонажи ходят, другие— летают, третьи— и ходят и летают.
 // Летать также может группа персонажей с помощью магии.
 public class Strategy {
-
-
-
+    
 }
