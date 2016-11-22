@@ -1,10 +1,7 @@
-package com.vaka.epam.homework.week4.task18;
+package com.vaka.epam.homework.week4.task18Fabric;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.io.File;
 
 /**
  * Created by Iaroslav on 11/19/2016.

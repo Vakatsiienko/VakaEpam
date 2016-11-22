@@ -1,4 +1,4 @@
-package com.vaka.epam.homework.week4.task22;
+package com.vaka.epam.homework.week4.task22Observer;
 
 /**
  * Created by Iaroslav on 11/19/2016.
@@ -8,4 +8,6 @@ package com.vaka.epam.homework.week4.task22;
 //        Почтовое отделение отправляет полученные печатные издания соответст-
 //        вующим подписчикам.
 public class Observer {
+
+
 }

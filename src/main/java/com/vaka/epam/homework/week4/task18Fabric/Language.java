@@ -1,4 +1,4 @@
-package com.vaka.epam.homework.week4.task18;
+package com.vaka.epam.homework.week4.task18Fabric;
 
 /**
  * Created by Iaroslav on 11/19/2016.

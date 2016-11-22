@@ -1,19 +1,16 @@
-package com.vaka.epam.homework.week4.task18;
+package com.vaka.epam.homework.week4.task18Fabric;
 
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by Iaroslav on 11/19/2016.
  */
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
 public class Movie {
 
     private String name;
+
+    private Resolution resolution;
 
     private AudioTrack audioTrack;
 
@@ -21,8 +18,9 @@ public class Movie {
 
 
 
-    public Movie(String name, AudioTrack audioTrack, Subtitles subtitles) {
+    public Movie(String name, Resolution resolution, AudioTrack audioTrack, Subtitles subtitles) {
         this.name = name;
+        this.resolution = resolution;
         this.audioTrack = audioTrack;
         this.subtitles = subtitles;
     }

@@ -1,4 +1,4 @@
-package com.vaka.epam.homework.week4.task17;
+package com.vaka.epam.homework.week4.task17Composite;
 
 /**
  * Created by Iaroslav on 11/19/2016.

@@ -1,8 +1,4 @@
-package com.vaka.epam.homework.week4.task18;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+package com.vaka.epam.homework.week4.task18Fabric;
 
 /**
  * Created by Iaroslav on 11/19/2016.
@@ -30,10 +26,10 @@ public class MovieFabric {
     }
 
 
-    public Movie getMovie(String name, Language language) {
+    public Movie getMovie(String name, Resolution resolution, Language language) {
         AudioTrack track = new AudioTrack(language);
         Subtitles subtitles = new Subtitles(language);
-        return new Movie(name, track, subtitles);
+        return new Movie(name, resolution, track, subtitles);
     }
 
 }

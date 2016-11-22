@@ -14,7 +14,7 @@ public abstract class Figure {
     private static Random random = new Random();
     private static final List<Figure> figures;
     private static Map<Class, Coordinates[]> startCoordinatesByFigure;
-    private static Map<Class, Coordinates[]> superStartCoordinatesByFigure;
+    private static Map<Class, Coordinates[]> startCoordinatesBySuperFigure;
 
     static {
         List<Figure> list = new ArrayList<>();
@@ -80,7 +80,7 @@ public abstract class Figure {
 
     public Figure getSuperInstance(){
         Figure instance = getFullInstance();
-        instance.coordinates = superStartCoordinatesByFigure.get(instance.getClass()).clone();
+        instance.coordinates = startCoordinatesBySuperFigure.get(instance.getClass()).clone();
         return instance;
-    };
+    }
 }
