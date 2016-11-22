@@ -1,6 +1,8 @@
 package com.vaka.epam.homework.week4.task19Prototype;
 
 import lombok.AllArgsConstructor;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -9,14 +11,29 @@ import java.util.Map;
 @AllArgsConstructor
 public class Wikipedia {
 
-    private Map<String, Article> articlesByTitle;
+    public Wikipedia(Map<String, Article> articleByTitle) {
+        this.articleByTitle = articleByTitle;
+        articleByTitleBeforeUpdate = new HashMap<>();
+    }
+
+    private Map<String, Article> articleByTitle;
+
+    private Map<String, Article> articleByTitleBeforeUpdate;
 
 
     public Article getArticleForEdit(String name) {
-        return articlesByTitle.get(name).createCopy();
+        return articleByTitle.get(name).createCopy();
     }
 
-    public void updateArticle(Article article){
-        articlesByTitle.put(article.getTitle(), article);
+    public void updateArticle(Article article) {
+        articleByTitleBeforeUpdate.put(article.getTitle(), articleByTitle.get(article.getTitle()));
+        articleByTitle.put(article.getTitle(), article);
+    }
+
+    public boolean undoUpdate(Article article) {
+        if (articleByTitleBeforeUpdate.containsKey(article.getTitle())) {
+            articleByTitle.put(article.getTitle(), articleByTitleBeforeUpdate.get(article.getTitle()));
+            return true;
+        } else return false;
     }
 }
